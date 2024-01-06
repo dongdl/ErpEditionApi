@@ -1,4 +1,4 @@
-package vn.com.bvb.task;
+package vn.com.bvb.camunda.task;
 
 import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.camunda.bpm.engine.delegate.JavaDelegate;
