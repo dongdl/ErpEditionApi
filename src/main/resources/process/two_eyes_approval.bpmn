@@ -25,21 +25,21 @@
     <bpmn:sequenceFlow id="Flow_00cdlug" sourceRef="Gateway_09p66rn" targetRef="Event_1j01qn8">
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">#{action != 'APPROVE'}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
-    <bpmn:userTask id="Activity_0olfk7e" name="6. Xem xét và đưa ra ý kiến" camunda:assignee="demo">
+    <bpmn:userTask id="Activity_0olfk7e" name="5. Xem xét và đưa ra ý kiến" camunda:assignee="demo">
       <bpmn:incoming>Flow_0be7nf6</bpmn:incoming>
       <bpmn:outgoing>Flow_03pkzmk</bpmn:outgoing>
     </bpmn:userTask>
-    <bpmn:startEvent id="StartEvent_1" name="5. Bắt đầu qui trình phê duyệt 2 mắt">
+    <bpmn:startEvent id="StartEvent_1" name="4. Bắt đầu qui trình phê duyệt 2 mắt">
       <bpmn:outgoing>Flow_0be7nf6</bpmn:outgoing>
     </bpmn:startEvent>
-    <bpmn:userTask id="Activity_17lzmb8" name="7. Xem xét và đưa ra ý kiến" camunda:assignee="demo">
+    <bpmn:userTask id="Activity_17lzmb8" name="6. Xem xét và đưa ra ý kiến" camunda:assignee="demo">
       <bpmn:incoming>Flow_03pkzmk</bpmn:incoming>
       <bpmn:outgoing>Flow_0ta8j2r</bpmn:outgoing>
     </bpmn:userTask>
-    <bpmn:endEvent id="Event_0hkg6l9" name="8. Kết thúc luồng phê duyệt 2 mắt">
+    <bpmn:endEvent id="Event_0hkg6l9" name="7. Kết thúc luồng phê duyệt 2 mắt">
       <bpmn:incoming>Flow_0s4lgq0</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:endEvent id="Event_1j01qn8" name="9. Kết thúc luồng phê duyệt 2 mắt với kết quả từ chối">
+    <bpmn:endEvent id="Event_1j01qn8" name="8. Kết thúc luồng phê duyệt 2 mắt với kết quả từ chối">
       <bpmn:incoming>Flow_00cdlug</bpmn:incoming>
       <bpmn:errorEventDefinition id="ErrorEventDefinition_0dfe2dd" errorRef="Error_0ye6f7k" />
     </bpmn:endEvent>

@@ -13,7 +13,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@Entity
+@Entity(name = "employee")
 public class Employee extends Person {
 	
 	@Id

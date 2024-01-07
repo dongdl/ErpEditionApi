@@ -2,11 +2,12 @@ package vn.com.bvb.service;
 
 import org.springframework.stereotype.Service;
 
-import vn.com.bvb.entity.Employee;
+import vn.com.bvb.dto.EmployeeDTO;
 
 @Service
 public interface EmployeeService {
 
-	public Employee findByCode(String code);
+	public EmployeeDTO findByCode(String code);
+	EmployeeDTO recruitEmployee(EmployeeDTO employeeDTO);
 
 }
