@@ -54,7 +54,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 		
 		variables.put("action", ImmutableMap.of("value", "FULL", "type", "String"));
 		variables.put("twoEyesApprovalAction", ImmutableMap.of("value", "APPROVE", "type", "String"));
-		variables.put("existingPosition", ImmutableMap.of("value", "false", "type", "Boolean"));
+		variables.put("existingPosition", ImmutableMap.of("value", "FALSE", "type", "String"));
 		
 	    ProcessInstanceWithVariables instance = processEngine.getRuntimeService().
 	    		createProcessInstanceByKey(ProcessDefinitionKeys.EmployeeKeys.RECRUITMENT)
