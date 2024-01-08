@@ -1,4 +1,30 @@
-spring.datasource.url: jdbc:h2:file:./camunda-h2-database
+spring:
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    properties:
+      hibernate:
+        jdbc:
+          fetch_size: 20
+          batch_size: 20
+        max_fetch_depth: 10  
+    generate-ddl: true
+    ddl-auto: create
+    show-sql: true
+
+datasource:
+  hrm:
+    jdbcUrl: jdbc:h2:file:./hrm
+    username: sa
+    password: password
+    driverClassName: org.h2.Driver
+    maximumPoolSize: 10
+    
+  camunda:
+    jdbcUrl: jdbc:h2:file:./camunda
+    username: sa
+    password: password
+    driverClassName: org.h2.Driver
+    maximumPoolSize: 10
 
 camunda.bpm.admin-user:
   id: demo
