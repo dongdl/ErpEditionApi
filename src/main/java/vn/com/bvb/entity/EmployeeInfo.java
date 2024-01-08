@@ -17,8 +17,8 @@ import lombok.experimental.SuperBuilder;
 @Setter
 @SuperBuilder
 @NoArgsConstructor
-@Entity(name = "employee")
-public class Employee extends Person {
+@Entity(name = "employeeInfo")
+public class EmployeeInfo extends BaseEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -121,14 +121,14 @@ public class Employee extends Person {
 	private String nationalityCode; // Quốc tịch"
 	@Column(name = "description")
 	private String description; // "
-	@Column(name = "createdBy")
+	/*@Column(name = "createdBy")
 	private String createdBy; // "
 	@Column(name = "createdDate")
 	private Date createdDate; // "
 	@Column(name = "modifiedBy")
 	private String modifiedBy; // "
 	@Column(name = "modifiedDate")
-	private Date modifiedDate; // "
+	private Date modifiedDate; // "*/
 
 	@Column(name = "recruitmentSource")
 	private String recruitmentSource; // Nguồn tuyển dụng"

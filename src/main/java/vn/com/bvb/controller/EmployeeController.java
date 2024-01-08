@@ -33,7 +33,7 @@ public class EmployeeController {
 	
 	
 	@POST
-	@Path(value = "")
+	@Path(value = "/create")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public EmployeeDTO recruitEmployee(EmployeeDTO employeeDTO) {
