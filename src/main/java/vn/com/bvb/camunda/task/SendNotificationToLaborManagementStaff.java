@@ -2,10 +2,9 @@ package vn.com.bvb.camunda.task;
 
 import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.camunda.bpm.engine.delegate.JavaDelegate;
+import org.springframework.stereotype.Component;
 
-import javax.inject.Named;
-
-@Named
+@Component
 public class SendNotificationToLaborManagementStaff implements JavaDelegate {
 
     @Override

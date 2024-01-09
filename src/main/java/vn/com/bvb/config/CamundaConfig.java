@@ -2,8 +2,6 @@ package vn.com.bvb.config;
 
 import javax.sql.DataSource;
 
-import org.camunda.bpm.engine.ProcessEngine;
-import org.camunda.bpm.engine.spring.ProcessEngineFactoryBean;
 import org.camunda.bpm.engine.spring.SpringProcessEngineConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,14 +25,6 @@ public class CamundaConfig extends HikariConfig {
 
 	private final Logger logger = LoggerFactory.getLogger(getClass());
 	
-	@Bean
-	public ProcessEngine processEngine() throws Exception {
-		logger.info("Creating the process engine.....");
-		ProcessEngineFactoryBean processEngineFactoryBean = new ProcessEngineFactoryBean();
-		processEngineFactoryBean.setProcessEngineConfiguration(processEngineConfiguration());
-		return processEngineFactoryBean.getObject();
-	}
-
 	@Bean
 	public SpringProcessEngineConfiguration processEngineConfiguration() {
 		SpringProcessEngineConfiguration configuration = new SpringProcessEngineConfiguration();

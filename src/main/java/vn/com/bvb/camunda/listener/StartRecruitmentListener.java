@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 import lombok.AllArgsConstructor;
 import vn.com.bvb.repository.RecruitmentUserTaskRepository;
 
-@Component("startRecruitmentListener")
+@Component
 @AllArgsConstructor
 public class StartRecruitmentListener implements TaskListener {
 	
