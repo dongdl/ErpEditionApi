@@ -10,7 +10,7 @@ import lombok.experimental.SuperBuilder;
 @Getter
 @Setter
 @SuperBuilder
-public class FamilyDTO {
+public class FamilyDTO extends BaseEntityDTO {
 	private long id;
 
 	private String relationShip; // Quan hệ"

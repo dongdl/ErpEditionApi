@@ -13,7 +13,7 @@ import vn.com.bvb.entity.Family;
 @Setter
 @SuperBuilder
 @NoArgsConstructor
-public class EmployeeDTO {
+public class EmployeeDTO extends BaseEntityDTO {
 
 	private long id;
 
@@ -69,11 +69,7 @@ public class EmployeeDTO {
 	private String foreignLanguage; // Trình độ ngoại ngữ
 	private String nationalityCode; // Quốc tịch
 	private String description; //
-	private String createdBy; //
-	private Date createdDate; //
-	private String modifiedBy; //
-	private Date modifiedDate; //
-
+	
 	private String recruitmentSource; // Nguồn tuyển dụng
 	private Date interviewDate; // Ngày phỏng vấn
 	private String recruitmentMinutes; // Biên bản tuyển dụng số
@@ -110,10 +106,7 @@ public class EmployeeDTO {
 	private Double salaryInsurance; // Thông tin thu nhập - LCB tham gia bảo hiểm
 	private Double salaryAllowance1; // Thông tin thu nhập - Phụ cấp 1
 	private Double salaryAllowance2; // Thông tin thu nhập - Phụ cấp 2
-
-	private String relationShip; // Quan hệ
-	private String name; // Họ tên
 	
-	private List<Family> familyInfoes;
+	private List<Family> families;
 
 }

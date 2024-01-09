@@ -1,9 +1,9 @@
 D:\PROJECTS\ERP\Erp Service\ErpEditionApi\src\main\java\vn\com\bvb\service\impl\EmployeeServiceImpl.java
 D:\PROJECTS\ERP\Erp Service\ErpEditionApi\src\main\java\vn\com\bvb\config\PersistenceConfig.java
 D:\PROJECTS\ERP\Erp Service\ErpEditionApi\src\main\java\vn\com\bvb\camunda\listener\StartRecruitmentListener.java
+D:\PROJECTS\ERP\Erp Service\ErpEditionApi\src\main\java\vn\com\bvb\dto\BaseEntityDTO.java
 D:\PROJECTS\ERP\Erp Service\ErpEditionApi\src\main\java\vn\com\bvb\dto\CompleteCurrentTaskResultDTO.java
 D:\PROJECTS\ERP\Erp Service\ErpEditionApi\src\main\java\vn\com\bvb\camunda\task\SendNotificationToLaborManagementStaff.java
-D:\PROJECTS\ERP\Erp Service\ErpEditionApi\src\main\java\vn\com\bvb\entity\BaseEntity.java
 D:\PROJECTS\ERP\Erp Service\ErpEditionApi\src\main\java\vn\com\bvb\config\JerseyConfig.java
 D:\PROJECTS\ERP\Erp Service\ErpEditionApi\src\main\java\vn\com\bvb\dto\RecruitmentUserTaskDTO.java
 D:\PROJECTS\ERP\Erp Service\ErpEditionApi\src\main\java\vn\com\bvb\controller\EmployeeController.java

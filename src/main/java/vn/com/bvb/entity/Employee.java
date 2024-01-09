@@ -9,18 +9,23 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.CascadeType;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 import lombok.experimental.SuperBuilder;
+import vn.com.bvb.dto.BaseEntityDTO;
 
+// https://loda.me/articles/jpahuong-dan-onetomany-va-manytoone
 @Getter
 @Setter
 @SuperBuilder
 @NoArgsConstructor
 @Entity(name = "employee")
-public class Employee extends BaseEntity {
+public class Employee extends BaseEntityDTO {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -122,15 +127,7 @@ public class Employee extends BaseEntity {
 	@Column(name = "nationalityCode")
 	private String nationalityCode; // Quốc tịch"
 	@Column(name = "description")
-	private String description; // "
-	/*@Column(name = "createdBy")
-	private String createdBy; // "
-	@Column(name = "createdDate")
-	private Date createdDate; // "
-	@Column(name = "modifiedBy")
-	private String modifiedBy; // "
-	@Column(name = "modifiedDate")
-	private Date modifiedDate; // "*/
+	private String description; 
 
 	@Column(name = "recruitmentSource")
 	private String recruitmentSource; // Nguồn tuyển dụng"
@@ -202,9 +199,10 @@ public class Employee extends BaseEntity {
 	@Column(name = "salaryAllowance2")
 	private Double salaryAllowance2; // Thông tin thu nhập - Phụ cấp 2"
 	
-	
-	
-	@OneToMany(mappedBy="employee")
+	@OneToMany(mappedBy = "employee", cascade = CascadeType.ALL) // Quan hệ 1-n với đối tượng ở dưới (Family) (1 người có nhiều con hoặc người thân)
+    // mappedBy trỏ tới tên biến Employee ở trong Family.
+    @EqualsAndHashCode.Exclude // không sử dụng trường này trong equals và hashcode
+    @ToString.Exclude // Không sử dụng trong toString()
 	private List<Family> families;
 
 }

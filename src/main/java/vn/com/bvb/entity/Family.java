@@ -10,22 +10,24 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 import lombok.experimental.SuperBuilder;
+import vn.com.bvb.dto.BaseEntityDTO;
 
 @Getter
 @Setter
 @SuperBuilder
 @NoArgsConstructor
 @Entity(name = "family")
-public class Family extends BaseEntity {
+public class Family extends BaseEntityDTO {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 
-	
 	@Column(name = "relationShip")
 	private String relationShip; // Quan hệ"
 	@Column(name = "name")
@@ -63,17 +65,12 @@ public class Family extends BaseEntity {
 	@Column(name = "emailPrivate")
 	private String emailPrivate; // Email cá nhân"
 	@Column(name = "description")
-	private String description; // "
-	/*@Column(name = "createdBy")
-	private String createdBy; // "
-	@Column(name = "createdDate")
-	private Date createdDate; // "
-	@Column(name = "modifiedBy")
-	private String modifiedBy; // "
-	@Column(name = "modifiedDate")
-	private Date modifiedDate; // "*/
+	private String description; 
 	
-	@ManyToOne
-    @JoinColumn(name="employeeId", nullable=false)
-	private Employee employee;
+	// Many to One Có nhiều thành viên trong một gia đình.
+    @ManyToOne
+    @JoinColumn(name="employeeId", nullable=false) // thông qua khóa ngoại employeeId
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    private Employee employee;
 }
