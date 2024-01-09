@@ -1,7 +1,7 @@
 package vn.com.bvb.dto;
 
+import java.util.Collection;
 import java.util.Date;
-import java.util.List;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -107,6 +107,6 @@ public class EmployeeDTO extends BaseEntityDTO {
 	private Double salaryAllowance1; // Thông tin thu nhập - Phụ cấp 1
 	private Double salaryAllowance2; // Thông tin thu nhập - Phụ cấp 2
 	
-	private List<Family> families;
+	private Collection<Family> families;
 
 }

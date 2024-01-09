@@ -1,7 +1,7 @@
 package vn.com.bvb.entity;
 
+import java.util.Collection;
 import java.util.Date;
-import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -203,6 +203,6 @@ public class Employee extends BaseEntityDTO {
     // mappedBy trỏ tới tên biến Employee ở trong Family.
     @EqualsAndHashCode.Exclude // không sử dụng trường này trong equals và hashcode
     @ToString.Exclude // Không sử dụng trong toString()
-	private List<Family> families;
+	private Collection<Family> families;
 
 }
