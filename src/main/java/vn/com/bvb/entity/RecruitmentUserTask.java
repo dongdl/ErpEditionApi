@@ -53,9 +53,7 @@ public class RecruitmentUserTask {
 
 	@Column(name = "gender")
 	private Integer gender;
-	
-	
-	
+		
 	@Column(name = "assignee")
 	private String assignee;
 

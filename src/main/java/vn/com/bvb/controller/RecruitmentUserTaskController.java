@@ -31,7 +31,4 @@ public class RecruitmentUserTaskController {
 	public List<RecruitmentUserTaskDTO> findByCode(@PathParam("assignee") String assignee) {
 		return recruitmentUserTaskService.findByAssignee(assignee);
 	}
-	
-	
-	
 }
