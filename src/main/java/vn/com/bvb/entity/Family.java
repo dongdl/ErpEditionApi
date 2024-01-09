@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,12 +19,13 @@ import lombok.experimental.SuperBuilder;
 @Setter
 @SuperBuilder
 @NoArgsConstructor
-@Entity(name = "familyInfo")
-public class FamilyInfo extends BaseEntity {
+@Entity(name = "family")
+public class Family extends BaseEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 
+	
 	@Column(name = "relationShip")
 	private String relationShip; // Quan hệ"
 	@Column(name = "name")
@@ -69,4 +72,8 @@ public class FamilyInfo extends BaseEntity {
 	private String modifiedBy; // "
 	@Column(name = "modifiedDate")
 	private Date modifiedDate; // "*/
+	
+	@ManyToOne
+    @JoinColumn(name="employeeId", nullable=false)
+	private Employee employee;
 }

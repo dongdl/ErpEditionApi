@@ -1,12 +1,14 @@
 package vn.com.bvb.entity;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,7 +20,7 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @NoArgsConstructor
 @Entity(name = "employee")
-public class Employee extends Person {
+public class Employee extends BaseEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -121,14 +123,14 @@ public class Employee extends Person {
 	private String nationalityCode; // Quốc tịch"
 	@Column(name = "description")
 	private String description; // "
-	@Column(name = "createdBy")
+	/*@Column(name = "createdBy")
 	private String createdBy; // "
 	@Column(name = "createdDate")
 	private Date createdDate; // "
 	@Column(name = "modifiedBy")
 	private String modifiedBy; // "
 	@Column(name = "modifiedDate")
-	private Date modifiedDate; // "
+	private Date modifiedDate; // "*/
 
 	@Column(name = "recruitmentSource")
 	private String recruitmentSource; // Nguồn tuyển dụng"
@@ -202,7 +204,7 @@ public class Employee extends Person {
 	
 	
 	
-	@Column(name = "familyInfoes")
-	private FamilyInfo familyInfoes;
+	@OneToMany(mappedBy="employee")
+	private List<Family> families;
 
 }

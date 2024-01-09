@@ -8,10 +8,12 @@ D:\PROJECTS\ERP\Erp Service\ErpEditionApi\src\main\java\vn\com\bvb\config\Jersey
 D:\PROJECTS\ERP\Erp Service\ErpEditionApi\src\main\java\vn\com\bvb\dto\RecruitmentUserTaskDTO.java
 D:\PROJECTS\ERP\Erp Service\ErpEditionApi\src\main\java\vn\com\bvb\controller\EmployeeController.java
 D:\PROJECTS\ERP\Erp Service\ErpEditionApi\src\main\java\vn\com\bvb\dto\EmployeeDTO.java
+D:\PROJECTS\ERP\Erp Service\ErpEditionApi\src\main\java\vn\com\bvb\entity\Family.java
 D:\PROJECTS\ERP\Erp Service\ErpEditionApi\src\main\java\vn\com\bvb\repository\EmployeeRepository.java
 D:\PROJECTS\ERP\Erp Service\ErpEditionApi\src\main\java\vn\com\bvb\service\RecruitmentUserTaskService.java
 D:\PROJECTS\ERP\Erp Service\ErpEditionApi\src\main\java\vn\com\bvb\constants\ProcessDefinitionKeys.java
 D:\PROJECTS\ERP\Erp Service\ErpEditionApi\src\main\java\vn\com\bvb\entity\Employee.java
+D:\PROJECTS\ERP\Erp Service\ErpEditionApi\src\main\java\vn\com\bvb\dto\FamilyDTO.java
 D:\PROJECTS\ERP\Erp Service\ErpEditionApi\src\main\java\vn\com\bvb\support\AuditorAwareImpl.java
 D:\PROJECTS\ERP\Erp Service\ErpEditionApi\src\main\java\vn\com\bvb\controller\RecruitmentUserTaskController.java
 D:\PROJECTS\ERP\Erp Service\ErpEditionApi\src\main\java\vn\com\bvb\service\EmployeeService.java
@@ -26,4 +28,3 @@ D:\PROJECTS\ERP\Erp Service\ErpEditionApi\src\main\java\vn\com\bvb\mapper\Employ
 D:\PROJECTS\ERP\Erp Service\ErpEditionApi\src\main\java\vn\com\bvb\utils\EmployeeUtils.java
 D:\PROJECTS\ERP\Erp Service\ErpEditionApi\src\main\java\vn\com\bvb\mapper\RecruitmentUserTaskMappingManager.java
 D:\PROJECTS\ERP\Erp Service\ErpEditionApi\src\main\java\vn\com\bvb\repository\RecruitmentUserTaskRepository.java
-D:\PROJECTS\ERP\Erp Service\ErpEditionApi\src\main\java\vn\com\bvb\entity\Person.java
