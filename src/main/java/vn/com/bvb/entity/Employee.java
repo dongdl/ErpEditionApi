@@ -9,6 +9,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import lombok.EqualsAndHashCode;
@@ -33,6 +35,7 @@ public class Employee extends BaseEntityDTO {
 
 	@Column(name = "code")
 	private String code; // Mã nhân sự (Auto generator) Tương đương với code bên recruitmentUserTask
+
 	@Column(name = "fullName")
 	private String fullName; // Họ và tên"
 	@Column(name = "positionCode")
@@ -51,12 +54,13 @@ public class Employee extends BaseEntityDTO {
 	private String insuranceNumber; // Số sổ bảo hiểm"
 	@Column(name = "accountNum")
 	private String accountNum; // Số TK BVB"
+	/*
+	 * Trạng thái: =1: Cộng tác viên =2: Học việc =3: Thử việc =4: Chính thức =5:
+	 * Nghỉ việc =6: Nghỉ không lương =7: Tạm nghỉ, Hoãn hợp đồng =99: Chưa phân
+	 * loại
+	 */
 	@Column(name = "status")
-	private String status; /*
-							 * Trạng thái: =1: Cộng tác viên =2: Học việc =3: Thử việc =4: Chính thức =5:
-							 * Nghỉ việc =6: Nghỉ không lương =7: Tạm nghỉ, Hoãn hợp đồng =99: Chưa phân
-							 * loại
-							 */
+	private String status;
 
 	@Column(name = "photo")
 	private String photo; // Ảnh thẻ"
@@ -120,14 +124,14 @@ public class Employee extends BaseEntityDTO {
 	private Date officialContractDate; // Ngày hợp đồng chính thức"
 	@Column(name = "positionDate")
 	private Date positionDate; // Ngày bổ nhiệm chức danh hiện tại."
-	@Column(name = "education")
-	private String education; // Trình độ học vấn"
+	@Column(name = "academicLevel")
+	private String academicLevel; // Trình độ học vấn"
 	@Column(name = "foreignLanguage")
 	private String foreignLanguage; // Trình độ ngoại ngữ"
 	@Column(name = "nationalityCode")
 	private String nationalityCode; // Quốc tịch"
 	@Column(name = "description")
-	private String description; 
+	private String description;
 
 	@Column(name = "recruitmentSource")
 	private String recruitmentSource; // Nguồn tuyển dụng"
@@ -174,9 +178,10 @@ public class Employee extends BaseEntityDTO {
 	private Date contractRealDate; // Thông tin HĐLĐ ban đầu - Ngày vào thực tế"
 	@Column(name = "contractRealShortDate")
 	private String contractRealShortDate; // Thông tin HĐLĐ ban đầu - Tháng/Năm"
+	// Thông tin HĐLĐ ban đầu - Loại hợp đồng (=1:Học việc;=2:thử việc;=3:chính
+	// thức;=99:Other)
 	@Column(name = "contractType")
-	private int contractType; // Thông tin HĐLĐ ban đầu - Loại hợp đồng (=1:Học việc;=2:thử việc;=3:chính
-								// thức;=99:Other)"
+	private int contractType;
 	@Column(name = "contractDurationDate")
 	private Date contractDurationDate; // Thông tin HĐLĐ ban đầu - Thời hạn hợp đồng"
 	@Column(name = "contractBeginDate")
@@ -198,11 +203,80 @@ public class Employee extends BaseEntityDTO {
 	private Double salaryAllowance1; // Thông tin thu nhập - Phụ cấp 1"
 	@Column(name = "salaryAllowance2")
 	private Double salaryAllowance2; // Thông tin thu nhập - Phụ cấp 2"
-	
-	@OneToMany(mappedBy = "employee", cascade = CascadeType.ALL) // Quan hệ 1-n với đối tượng ở dưới (Family) (1 người có nhiều con hoặc người thân)
-    // mappedBy trỏ tới tên biến Employee ở trong Family.
-    @EqualsAndHashCode.Exclude // không sử dụng trường này trong equals và hashcode
-    @ToString.Exclude // Không sử dụng trong toString()
+
+	@Column(name = "educationType")
+	private String educationType; // TRÌNH ĐỘ ĐẠI HỌC: Trình độ (ĐH, CĐ)"
+	@Column(name = "academicMajor")
+	private String academicMajor; // TRÌNH ĐỘ ĐẠI HỌC: Chuyên ngành"
+	@Column(name = "academicEducation")
+	private String academicEducation; // TRÌNH ĐỘ ĐẠI HỌC: Trường Đại Học"
+	@Column(name = "academicGraduationYear")
+	private int academicGraduationYear; // TRÌNH ĐỘ ĐẠI HỌC: Năm tốt nghiệp"
+	@Column(name = "academicCertificateCategory")
+	private String academicCertificateCategory; // TRÌNH ĐỘ ĐẠI HỌC: Xếp loại tốt nghiệp"
+	@Column(name = "academicMethod")
+	private String academicMethod; // TRÌNH ĐỘ ĐẠI HỌC: Hình thức đào tạo"
+	@Column(name = "academicCountry")
+	private String academicCountry; // TRÌNH ĐỘ ĐẠI HỌC: Quốc gia"
+	@Column(name = "afterUniversityLevel")
+	private String afterUniversityLevel; // TRÌNH ĐỘ SAU ĐẠI HỌC: Trình độ"
+	@Column(name = "afterUniversityMajor")
+	private String afterUniversityMajor; // TRÌNH ĐỘ SAU ĐẠI HỌC: Chuyên ngành"
+	@Column(name = "afterUniversityEducation")
+	private String afterUniversityEducation; // TRÌNH ĐỘ SAU ĐẠI HỌC: Trường Đại Học"
+	@Column(name = "afterUniversityGraduationYear")
+	private int afterUniversityGraduationYear; // TRÌNH ĐỘ SAU ĐẠI HỌC: Năm tốt nghiệp"
+	@Column(name = "afterUniversityCertificateCategory")
+	private String afterUniversityCertificateCategory; // TRÌNH ĐỘ SAU ĐẠI HỌC: Xếp loại tốt nghiệp"
+	@Column(name = "afterUniversityMethod")
+	private String afterUniversityMethod; // TRÌNH ĐỘ SAU ĐẠI HỌC: Hình thức đào tạo"
+	@Column(name = "afterUniversityCountry")
+	private String afterUniversityCountry; // TRÌNH ĐỘ SAU ĐẠI HỌC: Quốc gia"
+	@Column(name = "otherEducation")
+	private String otherEducation; // Các khóa, hình thức đào tạo khác"
+	@Column(name = "language1")
+	private String language1; // NGOẠI NGỮ: Ngoại ngữ 1"
+	@Column(name = "language1Description")
+	private String language1Description; // NGOẠI NGỮ: Ghi chú"
+	@Column(name = "language2")
+	private String language2; // NGOẠI NGỮ: Ngoại ngữ 2"
+	@Column(name = "language2Description")
+	private String language2Description; // NGOẠI NGỮ: Ghi chú"
+	@Column(name = "languageOther")
+	private String languageOther; // "
+
+	@ManyToOne
+	@JoinColumn(name = "departmentId") // thông qua khóa ngoại employeeId
+	@EqualsAndHashCode.Exclude
+	@ToString.Exclude
+	private Department department;
+
+	// Reference 1-n với đối tượng ở dưới (Family)(1 người có nhiều con hoặc người
+	// thân
+	@OneToMany(mappedBy = "employee", cascade = CascadeType.ALL)
+	// mappedBy trỏ tới tên biến Employee ở trong Family.
+	@EqualsAndHashCode.Exclude // không sử dụng trường này trong equals và hashcode
+	@ToString.Exclude // Không sử dụng trong toString()
 	private Collection<Family> families;
-	
+
+	@OneToMany(mappedBy = "employee", cascade = CascadeType.ALL)
+	@EqualsAndHashCode.Exclude // không sử dụng trường này trong equals và hashcode
+	@ToString.Exclude // Không sử dụng trong toString()
+	private Collection<EmployeeAttachment> employeeAttachments;
+
+	@OneToMany(mappedBy = "employee", cascade = CascadeType.ALL)
+	@EqualsAndHashCode.Exclude // không sử dụng trường này trong equals và hashcode
+	@ToString.Exclude // Không sử dụng trong toString()
+	private Collection<EmployeeAward> employeeAwards;
+
+	@OneToMany(mappedBy = "employee", cascade = CascadeType.ALL)
+	@EqualsAndHashCode.Exclude // không sử dụng trường này trong equals và hashcode
+	@ToString.Exclude // Không sử dụng trong toString()
+	private Collection<EmployeeSkill> employeeSkills;
+
+	@OneToMany(mappedBy = "employee", cascade = CascadeType.ALL)
+	@EqualsAndHashCode.Exclude // không sử dụng trường này trong equals và hashcode
+	@ToString.Exclude // Không sử dụng trong toString()
+	private Collection<EmployeeHistory> employeeHistories;
+
 }

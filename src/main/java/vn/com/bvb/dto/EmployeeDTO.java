@@ -28,11 +28,12 @@ public class EmployeeDTO extends BaseEntityDTO {
 	private String taxCode; // Mã số thuế thu nhập cá nhân
 	private String insuranceNumber; // Số sổ bảo hiểm
 	private String accountNum; // Số TK BVB
-	private String status; /*
-							 * Trạng thái: =1: Cộng tác viên =2: Học việc =3: Thử việc =4: Chính thức =5:
-							 * Nghỉ việc =6: Nghỉ không lương =7: Tạm nghỉ, Hoãn hợp đồng =99: Chưa phân
-							 * loại
-							 */
+	/*
+	 * Trạng thái: =1: Cộng tác viên =2: Học việc =3: Thử việc =4: Chính thức =5:
+	 * Nghỉ việc =6: Nghỉ không lương =7: Tạm nghỉ, Hoãn hợp đồng =99: Chưa phân
+	 * loại
+	 */
+	private String status;
 
 	private String photo; // Ảnh thẻ
 	private Date birthday; // Ngày sinh
@@ -65,11 +66,11 @@ public class EmployeeDTO extends BaseEntityDTO {
 	private Date probationaryDontractDate; // Ngày vào ngân hàng (Ngày quyết định tuyển dụng đầu tiên)
 	private Date officialContractDate; // Ngày hợp đồng chính thức
 	private Date positionDate; // Ngày bổ nhiệm chức danh hiện tại.
-	private String education; // Trình độ học vấn
+	private String academicLevel; // Trình độ học vấn
 	private String foreignLanguage; // Trình độ ngoại ngữ
 	private String nationalityCode; // Quốc tịch
-	private String description; //
-	
+	private String description;
+
 	private String recruitmentSource; // Nguồn tuyển dụng
 	private Date interviewDate; // Ngày phỏng vấn
 	private String recruitmentMinutes; // Biên bản tuyển dụng số
@@ -106,7 +107,28 @@ public class EmployeeDTO extends BaseEntityDTO {
 	private Double salaryInsurance; // Thông tin thu nhập - LCB tham gia bảo hiểm
 	private Double salaryAllowance1; // Thông tin thu nhập - Phụ cấp 1
 	private Double salaryAllowance2; // Thông tin thu nhập - Phụ cấp 2
-	
+
+	private String educationType; // TRÌNH ĐỘ ĐẠI HỌC: Trình độ (ĐH, CĐ)
+	private String academicMajor; // TRÌNH ĐỘ ĐẠI HỌC: Chuyên ngành
+	private String academicEducation; // TRÌNH ĐỘ ĐẠI HỌC: Trường Đại Học
+	private int academicGraduationYear; // TRÌNH ĐỘ ĐẠI HỌC: Năm tốt nghiệp
+	private String academicCertificateCategory; // TRÌNH ĐỘ ĐẠI HỌC: Xếp loại tốt nghiệp
+	private String academicMethod; // TRÌNH ĐỘ ĐẠI HỌC: Hình thức đào tạo
+	private String academicCountry; // TRÌNH ĐỘ ĐẠI HỌC: Quốc gia
+	private String afterUniversityLevel; // TRÌNH ĐỘ SAU ĐẠI HỌC: Trình độ
+	private String afterUniversityMajor; // TRÌNH ĐỘ SAU ĐẠI HỌC: Chuyên ngành
+	private String afterUniversityEducation; // TRÌNH ĐỘ SAU ĐẠI HỌC: Trường Đại Học
+	private int afterUniversityGraduationYear; // TRÌNH ĐỘ SAU ĐẠI HỌC: Năm tốt nghiệp
+	private String afterUniversityCertificateCategory; // TRÌNH ĐỘ SAU ĐẠI HỌC: Xếp loại tốt nghiệp
+	private String afterUniversityMethod; // TRÌNH ĐỘ SAU ĐẠI HỌC: Hình thức đào tạo
+	private String afterUniversityCountry; // TRÌNH ĐỘ SAU ĐẠI HỌC: Quốc gia
+	private String otherEducation; // Các khóa, hình thức đào tạo khác
+	private String language1; // NGOẠI NGỮ: Ngoại ngữ 1
+	private String language1Description; // NGOẠI NGỮ: Ghi chú
+	private String language2; // NGOẠI NGỮ: Ngoại ngữ 2
+	private String language2Description; // NGOẠI NGỮ: Ghi chú
+	private String languageOther;
+
 	private Collection<Family> families;
 
 }
