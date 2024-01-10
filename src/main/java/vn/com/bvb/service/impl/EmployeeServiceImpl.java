@@ -12,8 +12,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.google.common.collect.ImmutableMap;
-
 import lombok.AllArgsConstructor;
 import vn.com.bvb.constants.ProcessDefinitionKeys;
 import vn.com.bvb.dto.EmployeeDTO;
@@ -54,12 +52,9 @@ public class EmployeeServiceImpl implements EmployeeService {
 		
 		employeeRepository.save(employee);
 		
+		
 		Map<String, Object> variables = new HashMap<>();
-		
-		variables.put("action", ImmutableMap.of("value", "FULL", "type", "String"));
-		variables.put("twoEyesApprovalAction", ImmutableMap.of("value", "APPROVE", "type", "String"));
-		variables.put("existingPosition", ImmutableMap.of("value", "FALSE", "type", "String"));
-		
+		variables.put("existingPosition", false);
 	    ProcessInstanceWithVariables instance = processEngine.getRuntimeService().
 	    		createProcessInstanceByKey(ProcessDefinitionKeys.EmployeeKeys.RECRUITMENT)
 		        .setVariables(variables)
@@ -76,7 +71,10 @@ public class EmployeeServiceImpl implements EmployeeService {
 	    		.singleResult();
 	    
 	    taskService.setAssignee(task.getId(), "demo");
-	    taskService.complete(task.getId());
+	    
+		Map<String, Object> assigneeVariables = new HashMap<>();
+		assigneeVariables.put("directManager", "someone");
+	    taskService.complete(task.getId(), assigneeVariables);
 	    
 	    return employeeMappingManager.map(employee);
 		

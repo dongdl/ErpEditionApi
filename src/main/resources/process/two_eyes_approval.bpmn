@@ -25,7 +25,10 @@
     <bpmn:sequenceFlow id="Flow_00cdlug" sourceRef="Gateway_09p66rn" targetRef="Event_1j01qn8">
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">#{action != 'APPROVE'}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
-    <bpmn:userTask id="Activity_0olfk7e" name="5. Xem xét và đưa ra ý kiến" camunda:assignee="demo">
+    <bpmn:userTask id="Activity_0olfk7e" name="5. Xem xét và đưa ra ý kiến" camunda:assignee="${directManager}">
+      <bpmn:extensionElements>
+        <camunda:taskListener delegateExpression="#{directManagerListener}" event="create" />
+      </bpmn:extensionElements>
       <bpmn:incoming>Flow_0be7nf6</bpmn:incoming>
       <bpmn:outgoing>Flow_03pkzmk</bpmn:outgoing>
     </bpmn:userTask>
@@ -33,6 +36,9 @@
       <bpmn:outgoing>Flow_0be7nf6</bpmn:outgoing>
     </bpmn:startEvent>
     <bpmn:userTask id="Activity_17lzmb8" name="6. Xem xét và đưa ra ý kiến" camunda:assignee="demo">
+      <bpmn:extensionElements>
+        <camunda:taskListener delegateExpression="#{seniorDirectManagerListener}" event="create" />
+      </bpmn:extensionElements>
       <bpmn:incoming>Flow_03pkzmk</bpmn:incoming>
       <bpmn:outgoing>Flow_0ta8j2r</bpmn:outgoing>
     </bpmn:userTask>

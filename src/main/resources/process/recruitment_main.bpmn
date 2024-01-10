@@ -30,9 +30,13 @@
     <bpmn:endEvent id="Event_1ha6mzn" name="9. Kết thúc luồng">
       <bpmn:incoming>Flow_0bfnrf8</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:callActivity id="two_eyes" name="3. Quy trình phê duyệt 2 mắt" calledElement="two_eyes_approval">
+    <bpmn:callActivity id="two_eyes" name="3. Quy trình phê duyệt 2 mắt" calledElement="two_eyes_approval" camunda:variableMappingDelegateExpression="#{twoEyesApprovalMapping}">
       <bpmn:extensionElements>
         <camunda:in businessKey="#{execution.processBusinessKey}" />
+        <camunda:inputOutput>
+          <camunda:inputParameter name="test1">hhhhhhhhh</camunda:inputParameter>
+          <camunda:inputParameter name="directManagerVar">${directManager}</camunda:inputParameter>
+        </camunda:inputOutput>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_0g2xe5y</bpmn:incoming>
       <bpmn:outgoing>Flow_0bfnrf8</bpmn:outgoing>
@@ -43,7 +47,7 @@
     <bpmn:boundaryEvent id="Event_1pa84xy" name="Trường hợp ghế đang có CB khác kiêm nhiệm/ giao nhiệm vụ" cancelActivity="false" attachedToRef="Activity_1dvhjke">
       <bpmn:outgoing>Flow_0cq915r</bpmn:outgoing>
       <bpmn:conditionalEventDefinition id="ConditionalEventDefinition_0abo95a">
-        <bpmn:condition xsi:type="bpmn:tFormalExpression">${existingPosition == 'TRUE'}</bpmn:condition>
+        <bpmn:condition xsi:type="bpmn:tFormalExpression">${existingPosition == true}</bpmn:condition>
       </bpmn:conditionalEventDefinition>
     </bpmn:boundaryEvent>
     <bpmn:boundaryEvent id="Event_141upvo" name="Chỉnh sửa thông tin" attachedToRef="two_eyes">
@@ -89,16 +93,16 @@
           <dc:Bounds x="247" y="278" width="86" height="53" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_1wmtekq_di" bpmnElement="Event_1pa84xy">
-        <dc:Bounds x="492" y="272" width="36" height="36" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="398" y="315" width="84" height="53" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_080cg1o_di" bpmnElement="Event_141upvo">
         <dc:Bounds x="732" y="192" width="36" height="36" />
         <bpmndi:BPMNLabel>
           <dc:Bounds x="579" y="106" width="82" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1wmtekq_di" bpmnElement="Event_1pa84xy">
+        <dc:Bounds x="492" y="272" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="398" y="315" width="84" height="53" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_0cq915r_di" bpmnElement="Flow_0cq915r">
