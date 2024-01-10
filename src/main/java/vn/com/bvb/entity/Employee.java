@@ -3,13 +3,13 @@ package vn.com.bvb.entity;
 import java.util.Collection;
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-import javax.persistence.CascadeType;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -204,5 +204,5 @@ public class Employee extends BaseEntityDTO {
     @EqualsAndHashCode.Exclude // không sử dụng trường này trong equals và hashcode
     @ToString.Exclude // Không sử dụng trong toString()
 	private Collection<Family> families;
-
+	
 }

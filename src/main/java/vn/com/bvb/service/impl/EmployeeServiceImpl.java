@@ -4,7 +4,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.camunda.bpm.engine.ProcessEngine;
+import org.camunda.bpm.engine.TaskService;
 import org.camunda.bpm.engine.runtime.ProcessInstanceWithVariables;
+import org.camunda.bpm.engine.task.Task;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -28,6 +30,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 	private final Logger logger = LoggerFactory.getLogger(getClass());
 	
 	private ProcessEngine processEngine;
+	
+	private TaskService taskService;
 	
 	private EmployeeRepository employeeRepository;
 	
@@ -65,6 +69,14 @@ public class EmployeeServiceImpl implements EmployeeService {
 	    logger.info("Created Recruitement Process with businessKey={}, processIntanceId={}",
 	    		instance.getBusinessKey(), 
 	    		instance.getProcessInstanceId());
+	    
+	    String processInstanceId = instance.getProcessInstanceId();
+	    Task task = taskService.createTaskQuery()
+	    		.processInstanceId(processInstanceId)
+	    		.singleResult();
+	    
+	    taskService.setAssignee(task.getId(), "demo");
+	    taskService.complete(task.getId());
 	    
 	    return employeeMappingManager.map(employee);
 		

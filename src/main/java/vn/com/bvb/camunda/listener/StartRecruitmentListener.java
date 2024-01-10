@@ -1,7 +1,5 @@
 package vn.com.bvb.camunda.listener;
 
-import java.util.Date;
-
 import org.camunda.bpm.engine.delegate.DelegateTask;
 import org.camunda.bpm.engine.delegate.TaskListener;
 import org.slf4j.Logger;
@@ -28,26 +26,19 @@ public class StartRecruitmentListener implements TaskListener {
 	public void notify(DelegateTask delegateTask) {
 		String processInstanceId = delegateTask.getProcessInstanceId();
 		String businessKey = delegateTask.getExecution().getProcessInstance().getBusinessKey();
+		String assignee = delegateTask.getAssignee();
 
-		logger.info("processInstanceId = {}, businessKey = {}", processInstanceId, businessKey);
+		logger.info("processInstanceId = {}, businessKey = {}, assignee = {}", 
+				processInstanceId, businessKey, assignee);
 		
 		Employee employee = employeeRepository.findByCode(businessKey)
 				.orElseThrow(() -> new NullPointerException("Not Found Employee with code=" + businessKey));
 
-		RecruitmentUserTask recruitmentUserTask = RecruitmentUserTask.builder()
-				.code(employee.getCode())
-				.fullName(employee.getFullName())
-				.email(employee.getEmail())
-				.positionCode(employee.getPositionCode())
-				.positionDate(new Date())
-				.departmentCode(employee.getDepartmentCode())
-				.zone(employee.getZone())
-				.region(employee.getRegion())
-				.status(employee.getStatus())
-				.gender(employee.getGender())
-				.assignee("demo").build();
-		
 		logger.info("Creating UserTask for 'Cán bộ tuyển dụng'");
+		RecruitmentUserTask recruitmentUserTask = RecruitmentUserTask.builder()
+				.employeeId(employee.getId())
+				.assignee(assignee)
+				.build();
 		recruitmentUserTaskRepository.save(recruitmentUserTask);
 	}
 
