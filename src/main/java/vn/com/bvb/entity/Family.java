@@ -69,7 +69,7 @@ public class Family extends BaseEntityDTO {
 	
 	// Many to One Có nhiều thành viên trong một gia đình.
     @ManyToOne
-    @JoinColumn(name="employeeId", nullable=false) // thông qua khóa ngoại employeeId
+    @JoinColumn(name="employeeId") // thông qua khóa ngoại employeeId
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     private Employee employee;

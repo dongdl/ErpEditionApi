@@ -32,7 +32,7 @@ public class Employee extends BaseEntityDTO {
 	private long id;
 
 	@Column(name = "code")
-	private int code; // Mã nhân sự (Auto generator) Tương đương với code bên recruitmentUserTask
+	private String code; // Mã nhân sự (Auto generator) Tương đương với code bên recruitmentUserTask
 	@Column(name = "fullName")
 	private String fullName; // Họ và tên"
 	@Column(name = "positionCode")

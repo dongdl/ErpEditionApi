@@ -8,6 +8,6 @@ import lombok.experimental.UtilityClass;
 public class EmployeeUtils {
 
 	public static String generateEmployeeCode() {
-		return RandomStringUtils.randomAlphanumeric(10);
+		return RandomStringUtils.randomNumeric(10);
 	}
 }
