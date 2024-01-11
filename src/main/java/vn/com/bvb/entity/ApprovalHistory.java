@@ -29,19 +29,7 @@ public class ApprovalHistory extends BaseEntityDTO {
 	@Column(name = "taskId")
 	private String taskId;
 	
-	@Column(name = "type")
-	private String type;
-
-	@Column(name = "action")
-	private String action;
-	
-	@Column(name = "commentCode")
-	private String commentCode;
-	
-	@Column(name = "commentTitle")
-	private String commentTitle;
-	
-	@Column(name = "commentDetail")
-	private String commentDetail;
+	@Column(name = "assignee")
+	private String assignee;
 	
 }

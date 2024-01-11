@@ -7,11 +7,14 @@ import org.camunda.bpm.engine.delegate.TaskListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import lombok.AllArgsConstructor;
 import vn.com.bvb.constants.ApprovalStatus;
+import vn.com.bvb.entity.ApprovalHistory;
 import vn.com.bvb.entity.Employee;
 import vn.com.bvb.entity.RecruitmentUserTask;
+import vn.com.bvb.repository.ApprovalHistoryRepository;
 import vn.com.bvb.repository.EmployeeRepository;
 import vn.com.bvb.repository.RecruitmentUserTaskRepository;
 
@@ -24,8 +27,11 @@ public class DirectManagerListener implements TaskListener {
 	private RecruitmentUserTaskRepository recruitmentUserTaskRepository;
 	
 	private EmployeeRepository employeeRepository;
+	
+	private ApprovalHistoryRepository approvalHistoryRepository;
 
 	@Override
+	@Transactional
 	public void notify(DelegateTask delegateTask) {
 		String processInstanceId = delegateTask.getProcessInstanceId();
 		String businessKey = delegateTask.getExecution().getProcessInstance().getBusinessKey();
@@ -34,7 +40,7 @@ public class DirectManagerListener implements TaskListener {
 		logger.info("processInstanceId = {}, businessKey = {}, assignee = {}", 
 				processInstanceId, businessKey, assignee);
 		
-		logger.info("Update WAIT_PROCESSING task ------_> PROCESSING task");
+		logger.info("Update WAIT_PROCESSING task ------> PROCESSING task");
 		List<RecruitmentUserTask> recruitmentUserTasks = recruitmentUserTaskRepository
 				.findByStatus(ApprovalStatus.WAIT_PROCESSING.getStatus());
 		recruitmentUserTasks.forEach(recruitmentUserTask -> recruitmentUserTask.setStatus(ApprovalStatus.PROCESSING.getStatus()));
@@ -50,9 +56,14 @@ public class DirectManagerListener implements TaskListener {
 				.taskId(delegateTask.getId())
 				.status(ApprovalStatus.WAIT_PROCESSING.getStatus())
 				.build();
-		
-
 		recruitmentUserTaskRepository.save(recruitmentUserTask);
+		
+		ApprovalHistory approvalHistory = ApprovalHistory.builder()
+				.employeeId(employee.getId())
+				.taskId(delegateTask.getId())
+				.assignee(assignee)
+				.build();
+		approvalHistoryRepository.save(approvalHistory);
 	}
 
 }
