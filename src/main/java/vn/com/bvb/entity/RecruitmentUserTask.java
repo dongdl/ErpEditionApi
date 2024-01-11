@@ -30,5 +30,8 @@ public class RecruitmentUserTask {
 	
 	@Column(name = "taskId")
 	private String taskId;
+	
+	@Column(name = "status")
+	private String status;
 
 }

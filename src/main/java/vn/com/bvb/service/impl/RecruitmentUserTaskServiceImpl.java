@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import lombok.AllArgsConstructor;
 import vn.com.bvb.dto.RecruitmentUserTaskDTO;
@@ -29,9 +30,29 @@ public class RecruitmentUserTaskServiceImpl implements RecruitmentUserTaskServic
 	private RecruitmentUserTaskMappingManager recruitmentUserTaskMappingManager;
 
 	@Override
+	@Transactional
 	public List<RecruitmentUserTaskDTO> findByAssignee(String assignee) {
 		logger.info("Get all recruitment usertasks for assignee={} >>>>>>>", assignee);
 		List<RecruitmentUserTask> recruitmentUserTasks = recruitmentUserTaskRepository.findByAssignee(assignee);
+		return recruitmentUserTasks.stream()
+			.map(recruitmentUserTask -> {
+				
+				long employeeId = recruitmentUserTask.getEmployeeId();
+				Employee employee = employeeRepository.findById(employeeId)
+						.orElseThrow(() -> new NullPointerException("EmployeeId = " + employeeId + " not existing!!!"));
+				
+				RecruitmentUserTaskDTO recruitmentUserTaskDTO = recruitmentUserTaskMappingManager.map(employee);
+				recruitmentUserTaskDTO.setAssignee(assignee);
+				
+				return recruitmentUserTaskDTO;
+			}).collect(Collectors.toList());
+	}
+
+	@Override
+	@Transactional
+	public List<RecruitmentUserTaskDTO> findByAssigneeAndStatus(String assignee, String status) {
+		logger.info("Get all recruitment usertasks for assignee={} >>>>>>>", assignee);
+		List<RecruitmentUserTask> recruitmentUserTasks = recruitmentUserTaskRepository.findByAssigneeAndStatus(assignee, status);
 		return recruitmentUserTasks.stream()
 			.map(recruitmentUserTask -> {
 				

@@ -10,5 +10,8 @@ import vn.com.bvb.dto.RecruitmentUserTaskDTO;
 public interface RecruitmentUserTaskService {
 
 	List<RecruitmentUserTaskDTO> findByAssignee(String assignee);
+	
+	List<RecruitmentUserTaskDTO> findByAssigneeAndStatus(String assignee, String status);
+
 
 }

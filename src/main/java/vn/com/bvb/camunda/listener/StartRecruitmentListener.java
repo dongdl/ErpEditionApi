@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import lombok.AllArgsConstructor;
+import vn.com.bvb.constants.ApprovalStatus;
 import vn.com.bvb.entity.Employee;
 import vn.com.bvb.entity.RecruitmentUserTask;
 import vn.com.bvb.repository.EmployeeRepository;
@@ -39,6 +40,7 @@ public class StartRecruitmentListener implements TaskListener {
 				.employeeId(employee.getId())
 				.assignee(assignee)
 				.taskId(delegateTask.getId())
+				.status(ApprovalStatus.PROCESSING.getStatus())
 				.build();
 		recruitmentUserTaskRepository.save(recruitmentUserTask);
 	}

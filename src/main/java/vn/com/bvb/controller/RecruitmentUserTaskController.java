@@ -31,4 +31,13 @@ public class RecruitmentUserTaskController {
 	public List<RecruitmentUserTaskDTO> findByCode(@PathParam("assignee") String assignee) {
 		return recruitmentUserTaskService.findByAssignee(assignee);
 	}
+	
+	@GET
+	@Path(value = "/{assignee}/list/{status}")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<RecruitmentUserTaskDTO> findByAssigneeAndStatus(@PathParam("assignee") String assignee,
+			@PathParam("status") String status) {
+		return recruitmentUserTaskService.findByAssigneeAndStatus(assignee);
+	}
 }

@@ -9,5 +9,11 @@ import vn.com.bvb.entity.RecruitmentUserTask;
 public interface RecruitmentUserTaskRepository extends CrudRepository<RecruitmentUserTask, Long> {
 
 	List<RecruitmentUserTask> findByAssignee(String assignee);
+	
+	List<RecruitmentUserTask> findByStatus(String status);
+	
+	List<RecruitmentUserTask> findByAssigneeAndStatus(String assignee, String status);
+
+
 
 }
