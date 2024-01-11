@@ -81,10 +81,10 @@ public class EmployeeServiceImpl implements EmployeeService {
 	    		.processInstanceId(processInstanceId)
 	    		.singleResult();
 	    
-	    taskService.setAssignee(task.getId(), "demo");
+	    taskService.setAssignee(task.getId(), "user");
 	    
 		Map<String, Object> assigneeVariables = new HashMap<>();
-		assigneeVariables.put("directManager", "someone");
+		assigneeVariables.put("directManager", "manager1");
 	    taskService.complete(task.getId(), assigneeVariables);
 	    
 	    return employeeMappingManager.map(employee);
@@ -112,7 +112,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 		approvalDetailRepository.save(approvalDetail);
 		
 		Map<String, Object> assigneeVariables = new HashMap<>();
-		assigneeVariables.put("seniorDirectManager", "someone");
+		assigneeVariables.put("seniorDirectManager", "manager2");
 	    taskService.complete(taskId, assigneeVariables);
 	}
 	
