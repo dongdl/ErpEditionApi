@@ -38,6 +38,6 @@ public class RecruitmentUserTaskController {
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<RecruitmentUserTaskDTO> findByAssigneeAndStatus(@PathParam("assignee") String assignee,
 			@PathParam("status") String status) {
-		return recruitmentUserTaskService.findByAssigneeAndStatus(assignee);
+		return recruitmentUserTaskService.findByAssigneeAndStatus(assignee, status);
 	}
 }
