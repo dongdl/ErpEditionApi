@@ -4,17 +4,15 @@ import java.util.List;
 
 import org.mapstruct.Mapper;
 
+import vn.com.bvb.dto.EmployeeDTO;
 import vn.com.bvb.dto.RecruitmentUserTaskDTO;
-import vn.com.bvb.entity.RecruitmentUserTask;
+import vn.com.bvb.entity.Employee;
 
 @Mapper(componentModel = "spring")
 public interface RecruitmentUserTaskMappingManager {
 	
-	RecruitmentUserTaskDTO map(RecruitmentUserTask recruitmentUserTask);
+	RecruitmentUserTaskDTO map(Employee employee);
 	
-	List<RecruitmentUserTaskDTO> map(List<RecruitmentUserTask> recruitmentUserTasks);
+	List<RecruitmentUserTaskDTO> map(List<EmployeeDTO> employeeDTOs);
 	
-	RecruitmentUserTask map(RecruitmentUserTaskDTO recruitmentUserTaskDTO);
-
-
 }
