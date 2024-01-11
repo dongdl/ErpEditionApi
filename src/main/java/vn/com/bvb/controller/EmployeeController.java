@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
+import vn.com.bvb.dto.DirectManagerApprovalDTO;
 import vn.com.bvb.dto.EmployeeDTO;
 import vn.com.bvb.service.EmployeeService;
 
@@ -38,6 +39,14 @@ public class EmployeeController {
 	@Produces(MediaType.APPLICATION_JSON)
 	public EmployeeDTO recruitEmployee(EmployeeDTO employeeDTO) {
 		return employeeService.recruitEmployee(employeeDTO);
+	}
+	
+	@POST
+	@Path(value = "/approval")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public void approveEmployee(DirectManagerApprovalDTO directManagerApprovalDTO) {
+		employeeService.approveEmployee(directManagerApprovalDTO);
 	}
 	
 	

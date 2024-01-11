@@ -38,6 +38,7 @@ public class DirectManagerListener implements TaskListener {
 		RecruitmentUserTask recruitmentUserTask = RecruitmentUserTask.builder()
 				.employeeId(employee.getId())
 				.assignee(assignee)
+				.taskId(delegateTask.getId())
 				.build();
 		recruitmentUserTaskRepository.save(recruitmentUserTask);
 	}

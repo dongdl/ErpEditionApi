@@ -14,10 +14,13 @@ import org.springframework.transaction.annotation.Transactional;
 
 import lombok.AllArgsConstructor;
 import vn.com.bvb.constants.ProcessDefinitionKeys;
+import vn.com.bvb.dto.DirectManagerApprovalDTO;
 import vn.com.bvb.dto.EmployeeDTO;
 import vn.com.bvb.entity.Employee;
+import vn.com.bvb.entity.RecruitmentUserTask;
 import vn.com.bvb.mapper.EmployeeMappingManager;
 import vn.com.bvb.repository.EmployeeRepository;
+import vn.com.bvb.repository.RecruitmentUserTaskRepository;
 import vn.com.bvb.service.EmployeeService;
 import vn.com.bvb.utils.EmployeeUtils;
 
@@ -32,6 +35,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 	private TaskService taskService;
 	
 	private EmployeeRepository employeeRepository;
+	
+	private RecruitmentUserTaskRepository recruitmentUserTaskRepository;
 	
 	private EmployeeMappingManager employeeMappingManager;
 	
@@ -78,6 +83,20 @@ public class EmployeeServiceImpl implements EmployeeService {
 	    
 	    return employeeMappingManager.map(employee);
 		
+	}
+
+	@Override
+	@Transactional
+	public void approveEmployee(DirectManagerApprovalDTO directManagerApprovalDTO) {
+		long recruitmentUserTaskId = directManagerApprovalDTO.getRecruitmentUserTaskId();
+		RecruitmentUserTask recruitmentUserTask = recruitmentUserTaskRepository.findById(recruitmentUserTaskId)
+				.orElseThrow(() -> new IllegalArgumentException("RecuitmentUserTask = " + recruitmentUserTaskId + " not existing!!!"));
+		
+		String taskId = recruitmentUserTask.getTaskId();
+		Map<String, Object> assigneeVariables = new HashMap<>();
+		assigneeVariables.put("seniorDirectManager", "someone");
+	    taskService.complete(taskId, assigneeVariables);
+	
 	}
 
 }

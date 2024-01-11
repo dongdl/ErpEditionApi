@@ -34,10 +34,15 @@ public class RecruitmentUserTaskServiceImpl implements RecruitmentUserTaskServic
 		List<RecruitmentUserTask> recruitmentUserTasks = recruitmentUserTaskRepository.findByAssignee(assignee);
 		return recruitmentUserTasks.stream()
 			.map(recruitmentUserTask -> {
+				
 				long employeeId = recruitmentUserTask.getEmployeeId();
 				Employee employee = employeeRepository.findById(employeeId)
 						.orElseThrow(() -> new NullPointerException("EmployeeId = " + employeeId + " not existing!!!"));
-				return recruitmentUserTaskMappingManager.map(employee);
+				
+				RecruitmentUserTaskDTO recruitmentUserTaskDTO = recruitmentUserTaskMappingManager.map(employee);
+				recruitmentUserTaskDTO.setAssignee(assignee);
+				
+				return recruitmentUserTaskDTO;
 			}).collect(Collectors.toList());
 	}
 

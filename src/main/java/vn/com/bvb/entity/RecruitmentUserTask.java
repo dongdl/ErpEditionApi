@@ -27,5 +27,8 @@ public class RecruitmentUserTask {
 	
 	@Column(name = "employeeId")
 	private long employeeId;
+	
+	@Column(name = "taskId")
+	private String taskId;
 
 }
