@@ -10,6 +10,8 @@ spring:
     generate-ddl: true
     ddl-auto: create
     show-sql: true
+    defer-datasource-initialization: true
+  sql.init.mode: always
 
 datasource:
   hrm:
