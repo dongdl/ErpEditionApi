@@ -11,9 +11,12 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-public class DirectManagerApprovalDTO {
+public class SeniorDirectManagerApprovalDTO {
 	
 	private long recruitmentUserTaskId;
+	
+	//Đồng y hoặc Từ chối
+	private String action;
 	
 	private long employeeId;
 

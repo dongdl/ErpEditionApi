@@ -10,25 +10,38 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
+import vn.com.bvb.dto.BaseEntityDTO;
 
 @Getter
 @Setter
 @SuperBuilder
 @NoArgsConstructor
-@Entity(name = "recruitment_user_task")
-public class RecruitmentUserTask {
+@Entity(name = "approval_detail")
+public class ApprovalDetail extends BaseEntityDTO {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
-	
-	@Column(name = "assignee")
-	private String assignee;
-	
+
 	@Column(name = "employeeId")
 	private long employeeId;
-	
+
 	@Column(name = "taskId")
 	private String taskId;
+	
+	@Column(name = "type")
+	private String type;
 
+	@Column(name = "action")
+	private String action;
+	
+	@Column(name = "commentCode")
+	private String commentCode;
+	
+	@Column(name = "commentTitle")
+	private String commentTitle;
+	
+	@Column(name = "commentDetail")
+	private String commentDetail;
+	
 }

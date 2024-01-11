@@ -37,7 +37,7 @@ public class CamundaConfig extends HikariConfig {
 		configuration.setDbMetricsReporterActivate(false);
 
 		logger.info("Deploying automatically the processes in the process folder ......");
-		Resource resources[] = { new ClassPathResource("process/recruitment_main.bpmn"),
+		Resource[] resources = { new ClassPathResource("process/recruitment_main.bpmn"),
 				new ClassPathResource("process/two_eyes_approval.bpmn") };
 		configuration.setDeploymentResources(resources);
 

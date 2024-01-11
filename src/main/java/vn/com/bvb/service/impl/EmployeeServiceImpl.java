@@ -14,11 +14,15 @@ import org.springframework.transaction.annotation.Transactional;
 
 import lombok.AllArgsConstructor;
 import vn.com.bvb.constants.ProcessDefinitionKeys;
+import vn.com.bvb.constants.RecruitmentApprovalDetailType;
 import vn.com.bvb.dto.DirectManagerApprovalDTO;
 import vn.com.bvb.dto.EmployeeDTO;
+import vn.com.bvb.dto.SeniorDirectManagerApprovalDTO;
+import vn.com.bvb.entity.ApprovalDetail;
 import vn.com.bvb.entity.Employee;
 import vn.com.bvb.entity.RecruitmentUserTask;
 import vn.com.bvb.mapper.EmployeeMappingManager;
+import vn.com.bvb.repository.ApprovalDetailRepository;
 import vn.com.bvb.repository.EmployeeRepository;
 import vn.com.bvb.repository.RecruitmentUserTaskRepository;
 import vn.com.bvb.service.EmployeeService;
@@ -37,6 +41,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 	private EmployeeRepository employeeRepository;
 	
 	private RecruitmentUserTaskRepository recruitmentUserTaskRepository;
+	
+	private ApprovalDetailRepository approvalDetailRepository;
 	
 	private EmployeeMappingManager employeeMappingManager;
 	
@@ -93,10 +99,46 @@ public class EmployeeServiceImpl implements EmployeeService {
 				.orElseThrow(() -> new IllegalArgumentException("RecuitmentUserTask = " + recruitmentUserTaskId + " not existing!!!"));
 		
 		String taskId = recruitmentUserTask.getTaskId();
+		
+		ApprovalDetail approvalDetail = ApprovalDetail.builder()
+				.employeeId(directManagerApprovalDTO.getEmployeeId())
+				.taskId(taskId)
+				.type(RecruitmentApprovalDetailType.DIRECT_MANAGER)
+				.action("SUBMIT")
+				.commentCode(directManagerApprovalDTO.getCommentCode())
+				.commentTitle(directManagerApprovalDTO.getCommentTitle())
+				.commentDetail(directManagerApprovalDTO.getCommentDetail())
+				.build();
+		approvalDetailRepository.save(approvalDetail);
+		
 		Map<String, Object> assigneeVariables = new HashMap<>();
 		assigneeVariables.put("seniorDirectManager", "someone");
 	    taskService.complete(taskId, assigneeVariables);
-	
 	}
+	
+	@Override
+	@Transactional
+	public void approveEmployee(SeniorDirectManagerApprovalDTO seniorDirectManagerApprovalDTO) {
+		long recruitmentUserTaskId = seniorDirectManagerApprovalDTO.getRecruitmentUserTaskId();
+		RecruitmentUserTask recruitmentUserTask = recruitmentUserTaskRepository.findById(recruitmentUserTaskId)
+				.orElseThrow(() -> new IllegalArgumentException("RecuitmentUserTask = " + recruitmentUserTaskId + " not existing!!!"));
+		
+		String taskId = recruitmentUserTask.getTaskId();
+		
+		ApprovalDetail approvalDetail = ApprovalDetail.builder()
+				.employeeId(seniorDirectManagerApprovalDTO.getEmployeeId())
+				.taskId(taskId)
+				.type(RecruitmentApprovalDetailType.SENIOR_DIRECT_MANAGER)
+				.action(seniorDirectManagerApprovalDTO.getAction())
+				.commentCode(seniorDirectManagerApprovalDTO.getCommentCode())
+				.commentTitle(seniorDirectManagerApprovalDTO.getCommentTitle())
+				.commentDetail(seniorDirectManagerApprovalDTO.getCommentDetail())
+				.build();
+		approvalDetailRepository.save(approvalDetail);
+		
+		Map<String, Object> assigneeVariables = new HashMap<>();
+	    taskService.complete(taskId, assigneeVariables);
+	}
+
 
 }

@@ -14,6 +14,7 @@ import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import vn.com.bvb.dto.DirectManagerApprovalDTO;
 import vn.com.bvb.dto.EmployeeDTO;
+import vn.com.bvb.dto.SeniorDirectManagerApprovalDTO;
 import vn.com.bvb.service.EmployeeService;
 
 @Path("/employee")
@@ -25,7 +26,7 @@ public class EmployeeController {
 	private EmployeeService employeeService;
 
 	@GET
-	@Path(value = "/{code}")
+	@Path(value = "/find/{code}")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public EmployeeDTO findByCode(@PathParam("code") String code) {
@@ -42,13 +43,20 @@ public class EmployeeController {
 	}
 	
 	@POST
-	@Path(value = "/approval")
+	@Path(value = "/direct-manager/approval")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public void approveEmployee(DirectManagerApprovalDTO directManagerApprovalDTO) {
 		employeeService.approveEmployee(directManagerApprovalDTO);
 	}
 	
+	@POST
+	@Path(value = "/senior-direct-manager/approval")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public void approveEmployee(SeniorDirectManagerApprovalDTO seniorDirectManagerApprovalDTO) {
+		employeeService.approveEmployee(seniorDirectManagerApprovalDTO);
+	}
 	
 	
 }
