@@ -17,7 +17,7 @@ import vn.com.bvb.dto.EmployeeDTO;
 import vn.com.bvb.dto.SeniorDirectManagerApprovalDTO;
 import vn.com.bvb.service.EmployeeService;
 
-@Path("/employee")
+@Path("/hrm/employee")
 @AllArgsConstructor
 @NoArgsConstructor
 public class EmployeeController {

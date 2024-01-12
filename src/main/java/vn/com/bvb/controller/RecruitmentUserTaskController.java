@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 import vn.com.bvb.dto.RecruitmentUserTaskDTO;
 import vn.com.bvb.service.RecruitmentUserTaskService;
 
-@Path("/usertask/recruitment")
+@Path("/hrm/usertask/recruitment")
 @AllArgsConstructor
 @NoArgsConstructor
 public class RecruitmentUserTaskController {

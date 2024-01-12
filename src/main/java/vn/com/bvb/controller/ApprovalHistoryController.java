@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 import vn.com.bvb.dto.ApprovalHistoryDTO;
 import vn.com.bvb.service.ApprovalHistoryService;
 
-@Path("/approval-history")
+@Path("/hrm/approval-history")
 @AllArgsConstructor
 @NoArgsConstructor
 public class ApprovalHistoryController {

@@ -29,6 +29,11 @@ datasource:
     driverClassName: org.h2.Driver
     maximumPoolSize: 10
 
+
+springdoc:
+  api-docs.path: /api/openapi.json
+  swagger-ui.path: /swagger-ui.html
+
 camunda.bpm.admin-user:
   id: demo
   password: demo
