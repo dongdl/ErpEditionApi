@@ -137,6 +137,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 		approvalDetailRepository.save(approvalDetail);
 		
 		Map<String, Object> assigneeVariables = new HashMap<>();
+		assigneeVariables.put("action", seniorDirectManagerApprovalDTO.getAction());
 	    taskService.complete(taskId, assigneeVariables);
 	}
 
