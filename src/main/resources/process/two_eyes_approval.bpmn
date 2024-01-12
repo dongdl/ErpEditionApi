@@ -35,7 +35,7 @@
     <bpmn:startEvent id="StartEvent_1" name="4. Bắt đầu qui trình phê duyệt 2 mắt">
       <bpmn:outgoing>Flow_0be7nf6</bpmn:outgoing>
     </bpmn:startEvent>
-    <bpmn:userTask id="Activity_17lzmb8" name="6. Xem xét và đưa ra ý kiến" camunda:assignee="demo">
+    <bpmn:userTask id="Activity_17lzmb8" name="6. Xem xét và đưa ra ý kiến" camunda:assignee="${seniorDirectManager}">
       <bpmn:extensionElements>
         <camunda:taskListener delegateExpression="#{seniorDirectManagerListener}" event="create" />
       </bpmn:extensionElements>

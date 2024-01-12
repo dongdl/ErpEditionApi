@@ -81,7 +81,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 	    		.processInstanceId(processInstanceId)
 	    		.singleResult();
 	    
-	    taskService.setAssignee(task.getId(), "user");
+	    taskService.setAssignee(task.getId(), "demo");
 	    
 		Map<String, Object> assigneeVariables = new HashMap<>();
 		assigneeVariables.put("directManager", "manager1");
