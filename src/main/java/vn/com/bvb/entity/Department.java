@@ -30,12 +30,12 @@ public class Department extends BaseEntityDTO {
 
 	@Column(name = "code")
 	private String code; // Mã phòng ban"
+	@Column(name = "name")
+	private String name; // Tên phòng ban"
 	@Column(name = "parentLevel")
 	private int parentLevel; // Vị trí hiển thị bậc 1"
 	@Column(name = "level")
 	private int level; // Vị trí hiển thị bậc 2"
-	@Column(name = "name")
-	private String name; // Tên phòng ban"
 	@Column(name = "category")
 	private String category; // Loại phòng"
 	@Column(name = "description")
