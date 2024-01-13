@@ -20,7 +20,7 @@ import vn.com.bvb.repository.RecruitmentUserTaskRepository;
 
 @Component
 @AllArgsConstructor
-public class StartRecruitmentListener implements TaskListener {
+public class LaborStaffListener implements TaskListener {
 
 	private final Logger logger = LoggerFactory.getLogger(getClass());
 

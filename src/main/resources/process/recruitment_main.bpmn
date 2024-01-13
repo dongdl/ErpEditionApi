@@ -21,7 +21,7 @@
     </bpmn:endEvent>
     <bpmn:userTask id="Activity_1dvhjke" name="1. Nhập thông tin tuyển dụng" camunda:assignee="${user}">
       <bpmn:extensionElements>
-        <camunda:taskListener delegateExpression="#{startRecruitmentListener}" event="create" />
+        <camunda:taskListener delegateExpression="#{laborStaffListener}" event="create" />
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_1bwxnug</bpmn:incoming>
       <bpmn:incoming>Flow_1lbbgml</bpmn:incoming>

@@ -14,6 +14,7 @@ import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import vn.com.bvb.dto.DirectManagerApprovalDTO;
 import vn.com.bvb.dto.EmployeeDTO;
+import vn.com.bvb.dto.LaborStaffApprovalDTO;
 import vn.com.bvb.dto.SeniorDirectManagerApprovalDTO;
 import vn.com.bvb.service.EmployeeService;
 
@@ -38,24 +39,32 @@ public class EmployeeController {
 	@Path(value = "/create")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public EmployeeDTO recruitEmployee(EmployeeDTO employeeDTO) {
-		return employeeService.recruitEmployee(employeeDTO);
+	public EmployeeDTO startEmployeeRecruitment(EmployeeDTO employeeDTO) {
+		return employeeService.startEmployeeRecruitment(employeeDTO);
+	}
+	
+	@POST
+	@Path(value = "/labor-staff/approval")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public void approveEmployee(LaborStaffApprovalDTO laborStaffApprovalDTO) {
+		employeeService.approveEmployeeByLaborStaff(laborStaffApprovalDTO);
 	}
 	
 	@POST
 	@Path(value = "/direct-manager/approval")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public void approveEmployee(DirectManagerApprovalDTO directManagerApprovalDTO) {
-		employeeService.approveEmployee(directManagerApprovalDTO);
+	public void approveEmployeeByDirectManager(DirectManagerApprovalDTO directManagerApprovalDTO) {
+		employeeService.approveEmployeeByDirectManager(directManagerApprovalDTO);
 	}
 	
 	@POST
 	@Path(value = "/senior-direct-manager/approval")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public void approveEmployee(SeniorDirectManagerApprovalDTO seniorDirectManagerApprovalDTO) {
-		employeeService.approveEmployee(seniorDirectManagerApprovalDTO);
+	public void approveEmployeeBySeniorManager(SeniorDirectManagerApprovalDTO seniorDirectManagerApprovalDTO) {
+		employeeService.approveEmployeeBySeniorManager(seniorDirectManagerApprovalDTO);
 	}
 	
 	

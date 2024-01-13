@@ -3,10 +3,10 @@ package vn.com.bvb.service.impl;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
 import org.camunda.bpm.engine.ProcessEngine;
 import org.camunda.bpm.engine.TaskService;
 import org.camunda.bpm.engine.runtime.ProcessInstanceWithVariables;
-import org.camunda.bpm.engine.task.Task;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -18,6 +18,7 @@ import vn.com.bvb.constants.ProcessDefinitionKeys;
 import vn.com.bvb.constants.RecruitmentApprovalDetailType;
 import vn.com.bvb.dto.DirectManagerApprovalDTO;
 import vn.com.bvb.dto.EmployeeDTO;
+import vn.com.bvb.dto.LaborStaffApprovalDTO;
 import vn.com.bvb.dto.SeniorDirectManagerApprovalDTO;
 import vn.com.bvb.entity.ApprovalDetail;
 import vn.com.bvb.entity.Employee;
@@ -57,45 +58,74 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 	@Override
 	@Transactional
-	public EmployeeDTO recruitEmployee(EmployeeDTO employeeDTO) {
-		String employeeCode = EmployeeUtils.generateEmployeeCode();
-		employeeDTO.setCode(employeeCode);
-		Employee employee = employeeMappingManager.map(employeeDTO);
-		if (!CollectionUtils.isEmpty(employee.getFamilies())) {
-			employee.getFamilies().forEach(family -> family.setEmployee(employee));
+	public EmployeeDTO startEmployeeRecruitment(EmployeeDTO employeeDTO) {
+		
+		String employeeCode = employeeDTO.getCode();
+		
+		if ( StringUtils.isBlank(employeeCode)) {
+			logger.info("Start new recruitment process ......>>>>");
+			employeeCode = EmployeeUtils.generateEmployeeCode();
+			employeeDTO.setCode(employeeCode);
+			Employee employee = employeeMappingManager.map(employeeDTO);
+			if (!CollectionUtils.isEmpty(employee.getFamilies())) {
+				employee.getFamilies().forEach(family -> family.setEmployee(employee));
+			}
+			
+			employeeRepository.save(employee);
+			
+			Map<String, Object> variables = new HashMap<>();
+			variables.put("user", "user");
+			variables.put("existingPosition", false);
+		    ProcessInstanceWithVariables instance = processEngine.getRuntimeService().
+		    		createProcessInstanceByKey(ProcessDefinitionKeys.EmployeeKeys.RECRUITMENT)
+			        .setVariables(variables)
+			        .businessKey(employeeCode)
+			        .executeWithVariablesInReturn();
+		    
+		    logger.info("Created Recruitement Process with businessKey={}, processIntanceId={}",
+		    		instance.getBusinessKey(), 
+		    		instance.getProcessInstanceId());
+		    
+		    return employeeMappingManager.map(employee);	
+		} else {
+			logger.info("Update existing recruitment information for employeeCode = {} >>>>>>", employeeCode);
+			Employee employee = employeeRepository.findByCode(employeeCode)
+					.orElseThrow(() -> new IllegalArgumentException("Employee is not existing with code " + employeeDTO.getCode()));
+			
+			return employeeMappingManager.map(employee);
 		}
 		
-		employeeRepository.save(employee);
+	   
+	}
+	
+	@Override
+	@Transactional
+	public void approveEmployeeByLaborStaff(LaborStaffApprovalDTO laborStaffApprovalDTO) {
+		long recruitmentUserTaskId = laborStaffApprovalDTO.getRecruitmentUserTaskId();
+		RecruitmentUserTask recruitmentUserTask = recruitmentUserTaskRepository.findById(recruitmentUserTaskId)
+				.orElseThrow(() -> new IllegalArgumentException("RecuitmentUserTask = " + recruitmentUserTaskId + " not existing!!!"));
 		
-		Map<String, Object> variables = new HashMap<>();
-		variables.put("user", "user");
-		variables.put("existingPosition", false);
-	    ProcessInstanceWithVariables instance = processEngine.getRuntimeService().
-	    		createProcessInstanceByKey(ProcessDefinitionKeys.EmployeeKeys.RECRUITMENT)
-		        .setVariables(variables)
-		        .businessKey(employeeCode)
-		        .executeWithVariablesInReturn();
-	    
-	    logger.info("Created Recruitement Process with businessKey={}, processIntanceId={}",
-	    		instance.getBusinessKey(), 
-	    		instance.getProcessInstanceId());
-	    
-	    String processInstanceId = instance.getProcessInstanceId();
-	    Task task = taskService.createTaskQuery()
-	    		.processInstanceId(processInstanceId)
-	    		.singleResult();
-	    	    
+		String taskId = recruitmentUserTask.getTaskId();
+		
+		ApprovalDetail approvalDetail = ApprovalDetail.builder()
+				.employeeId(laborStaffApprovalDTO.getEmployeeId())
+				.taskId(taskId)
+				.type(RecruitmentApprovalDetailType.LABOR_STAFF)
+				.action("SUBMIT")
+				.commentCode(laborStaffApprovalDTO.getCommentCode())
+				.commentTitle(laborStaffApprovalDTO.getCommentTitle())
+				.commentDetail(laborStaffApprovalDTO.getCommentDetail())
+				.build();
+		approvalDetailRepository.save(approvalDetail);
+		
 		Map<String, Object> assigneeVariables = new HashMap<>();
 		assigneeVariables.put("directManager", "manager1");
-	    taskService.complete(task.getId(), assigneeVariables);
-	    
-	    return employeeMappingManager.map(employee);
-		
+	    taskService.complete(taskId, assigneeVariables);
 	}
 
 	@Override
 	@Transactional
-	public void approveEmployee(DirectManagerApprovalDTO directManagerApprovalDTO) {
+	public void approveEmployeeByDirectManager(DirectManagerApprovalDTO directManagerApprovalDTO) {
 		long recruitmentUserTaskId = directManagerApprovalDTO.getRecruitmentUserTaskId();
 		RecruitmentUserTask recruitmentUserTask = recruitmentUserTaskRepository.findById(recruitmentUserTaskId)
 				.orElseThrow(() -> new IllegalArgumentException("RecuitmentUserTask = " + recruitmentUserTaskId + " not existing!!!"));
@@ -120,7 +150,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 	
 	@Override
 	@Transactional
-	public void approveEmployee(SeniorDirectManagerApprovalDTO seniorDirectManagerApprovalDTO) {
+	public void approveEmployeeBySeniorManager(SeniorDirectManagerApprovalDTO seniorDirectManagerApprovalDTO) {
 		long recruitmentUserTaskId = seniorDirectManagerApprovalDTO.getRecruitmentUserTaskId();
 		RecruitmentUserTask recruitmentUserTask = recruitmentUserTaskRepository.findById(recruitmentUserTaskId)
 				.orElseThrow(() -> new IllegalArgumentException("RecuitmentUserTask = " + recruitmentUserTaskId + " not existing!!!"));
@@ -142,6 +172,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 		assigneeVariables.put("action", seniorDirectManagerApprovalDTO.getAction());
 	    taskService.complete(taskId, assigneeVariables);
 	}
+
+
 
 
 }

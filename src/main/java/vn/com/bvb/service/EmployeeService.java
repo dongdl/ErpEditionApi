@@ -4,17 +4,20 @@ import org.springframework.stereotype.Service;
 
 import vn.com.bvb.dto.DirectManagerApprovalDTO;
 import vn.com.bvb.dto.EmployeeDTO;
+import vn.com.bvb.dto.LaborStaffApprovalDTO;
 import vn.com.bvb.dto.SeniorDirectManagerApprovalDTO;
 
 @Service
 public interface EmployeeService {
 
-	public EmployeeDTO findByCode(String code);
+	EmployeeDTO findByCode(String code);
 	
-	EmployeeDTO recruitEmployee(EmployeeDTO employeeDTO);
+	EmployeeDTO startEmployeeRecruitment(EmployeeDTO employeeDTO);
 	
-	void approveEmployee(DirectManagerApprovalDTO directManagerApprovalDTO);
+	void approveEmployeeByLaborStaff(LaborStaffApprovalDTO laborStaffApprovalDTO);
+
+	void approveEmployeeByDirectManager(DirectManagerApprovalDTO directManagerApprovalDTO);
 	
-	void approveEmployee(SeniorDirectManagerApprovalDTO directManagerApprovalDTO);
+	void approveEmployeeBySeniorManager(SeniorDirectManagerApprovalDTO directManagerApprovalDTO);
 	
 }
