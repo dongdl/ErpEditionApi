@@ -94,8 +94,10 @@ public class EmployeeServiceImpl implements EmployeeService {
 							return true;
 						}
 					}).collect(Collectors.toList());
-			familyRepository.deleteAll(deletedFamilies);
-			
+			if (!CollectionUtils.isEmpty(deletedFamilies)) {
+				logger.info("Deleting the families which aren't in the current submission list");
+				familyRepository.deleteAll(deletedFamilies);
+			}
 		}
 		
 		employeeRepository.save(employee);
