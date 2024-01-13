@@ -42,7 +42,9 @@ public class RecruitmentUserTaskServiceImpl implements RecruitmentUserTaskServic
 						.orElseThrow(() -> new NullPointerException("EmployeeId = " + employeeId + " not existing!!!"));
 				
 				RecruitmentUserTaskDTO recruitmentUserTaskDTO = recruitmentUserTaskMappingManager.map(employee);
+				recruitmentUserTaskDTO.setRecruitmentUserTaskId(recruitmentUserTask.getId());
 				recruitmentUserTaskDTO.setAssignee(assignee);
+				recruitmentUserTaskDTO.setStatus(recruitmentUserTask.getStatus());
 				
 				return recruitmentUserTaskDTO;
 			}).collect(Collectors.toList());
@@ -61,7 +63,9 @@ public class RecruitmentUserTaskServiceImpl implements RecruitmentUserTaskServic
 						.orElseThrow(() -> new NullPointerException("EmployeeId = " + employeeId + " not existing!!!"));
 				
 				RecruitmentUserTaskDTO recruitmentUserTaskDTO = recruitmentUserTaskMappingManager.map(employee);
+				recruitmentUserTaskDTO.setRecruitmentUserTaskId(recruitmentUserTask.getId());
 				recruitmentUserTaskDTO.setAssignee(assignee);
+				recruitmentUserTaskDTO.setStatus(recruitmentUserTask.getStatus());
 				
 				return recruitmentUserTaskDTO;
 			}).collect(Collectors.toList());
