@@ -7,6 +7,7 @@ import org.camunda.bpm.spring.boot.starter.rest.CamundaJerseyResourceConfig;
 import org.springframework.stereotype.Component;
 
 import io.swagger.v3.jaxrs2.integration.resources.OpenApiResource;
+import vn.com.bvb.support.CorsFilter;
 
 @Component
 @ApplicationPath("/api")
@@ -17,6 +18,7 @@ public class JerseyConfig extends CamundaJerseyResourceConfig {
 	protected void registerAdditionalResources() {
 		packages("vn.com.bvb.controller");
 		register(OpenApiResource.class);
+		register(CorsFilter.class);
 	}
 
 }
