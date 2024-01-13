@@ -1,6 +1,7 @@
 package vn.com.bvb.repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.repository.CrudRepository;
 
@@ -10,9 +11,13 @@ public interface RecruitmentUserTaskRepository extends CrudRepository<Recruitmen
 
 	List<RecruitmentUserTask> findByAssignee(String assignee);
 	
+	List<RecruitmentUserTask> findByEmployeeId(long employeeId);
+	
 	List<RecruitmentUserTask> findByEmployeeIdAndStatus(long employeeId, String status);
 	
 	List<RecruitmentUserTask> findByAssigneeAndStatus(String assignee, String status);
+	
+	Optional<RecruitmentUserTask> findByEmployeeIdAndTaskId(long employeeId, String taskId);
 
 
 

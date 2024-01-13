@@ -6,41 +6,32 @@
   <bpmn:process id="recruitment" isExecutable="true">
     <bpmn:laneSet id="LaneSet_01x4wvs">
       <bpmn:lane id="Lane_0d02sp5" name="CB Tuyển dụng">
-        <bpmn:flowNodeRef>Event_1x4wikn</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_1dvhjke</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_1ha6mzn</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>two_eyes</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_0yoimwh</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_1pa84xy</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Event_1x4wikn</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>two_eyes</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_141upvo</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Gateway_0om3vk8</bpmn:flowNodeRef>
       </bpmn:lane>
     </bpmn:laneSet>
-    <bpmn:endEvent id="Event_1x4wikn" name="2. Gửi thông báo tới CB QHLĐ">
-      <bpmn:incoming>Flow_0cq915r</bpmn:incoming>
-      <bpmn:messageEventDefinition id="MessageEventDefinition_0s6xv0c" camunda:delegateExpression="#{sendNotificationToLaborManagementStaff}" />
-    </bpmn:endEvent>
     <bpmn:userTask id="Activity_1dvhjke" name="1. Nhập thông tin tuyển dụng" camunda:assignee="${user}">
       <bpmn:extensionElements>
         <camunda:taskListener delegateExpression="#{laborStaffListener}" event="create" />
+        <camunda:taskListener delegateExpression="#{completeRecruitmentListener}" event="complete" />
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_1bwxnug</bpmn:incoming>
       <bpmn:incoming>Flow_1lbbgml</bpmn:incoming>
       <bpmn:outgoing>Flow_0g2xe5y</bpmn:outgoing>
     </bpmn:userTask>
     <bpmn:endEvent id="Event_1ha6mzn" name="9. Kết thúc luồng">
-      <bpmn:incoming>Flow_0bfnrf8</bpmn:incoming>
-    </bpmn:endEvent>
-    <bpmn:callActivity id="two_eyes" name="3. Quy trình phê duyệt 2 mắt" calledElement="two_eyes_approval" camunda:variableMappingDelegateExpression="#{twoEyesApprovalMapping}">
       <bpmn:extensionElements>
-        <camunda:in businessKey="#{execution.processBusinessKey}" />
-        <camunda:inputOutput>
-          <camunda:inputParameter name="test1">hhhhhhhhh</camunda:inputParameter>
-          <camunda:inputParameter name="directManagerVar">${directManager}</camunda:inputParameter>
-        </camunda:inputOutput>
+        <camunda:executionListener delegateExpression="#{doneRecruitmentListener}" event="end" />
       </bpmn:extensionElements>
-      <bpmn:incoming>Flow_0g2xe5y</bpmn:incoming>
-      <bpmn:outgoing>Flow_0bfnrf8</bpmn:outgoing>
-    </bpmn:callActivity>
+      <bpmn:incoming>Flow_0bfnrf8</bpmn:incoming>
+      <bpmn:incoming>Flow_0hyamwh</bpmn:incoming>
+    </bpmn:endEvent>
     <bpmn:startEvent id="Event_0yoimwh" name="0. Quyết định tuyển dụng và bổ nhiệm / tiếp nhận thử việc/ học việc">
       <bpmn:outgoing>Flow_1lbbgml</bpmn:outgoing>
     </bpmn:startEvent>
@@ -50,15 +41,41 @@
         <bpmn:condition xsi:type="bpmn:tFormalExpression">${existingPosition == true}</bpmn:condition>
       </bpmn:conditionalEventDefinition>
     </bpmn:boundaryEvent>
+    <bpmn:sequenceFlow id="Flow_0cq915r" sourceRef="Event_1pa84xy" targetRef="Event_1x4wikn" />
+    <bpmn:sequenceFlow id="Flow_1bwxnug" sourceRef="Event_141upvo" targetRef="Activity_1dvhjke" />
+    <bpmn:sequenceFlow id="Flow_1lbbgml" sourceRef="Event_0yoimwh" targetRef="Activity_1dvhjke" />
+    <bpmn:sequenceFlow id="Flow_0g2xe5y" sourceRef="Activity_1dvhjke" targetRef="Gateway_0om3vk8" />
+    <bpmn:sequenceFlow id="Flow_0bfnrf8" sourceRef="two_eyes" targetRef="Event_1ha6mzn" />
+    <bpmn:endEvent id="Event_1x4wikn" name="2. Gửi thông báo tới CB QHLĐ">
+      <bpmn:incoming>Flow_0cq915r</bpmn:incoming>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_0s6xv0c" camunda:delegateExpression="#{sendNotificationToLaborManagementStaff}" />
+    </bpmn:endEvent>
+    <bpmn:callActivity id="two_eyes" name="3. Quy trình phê duyệt 2 mắt" calledElement="two_eyes_approval" camunda:variableMappingDelegateExpression="#{twoEyesApprovalMapping}">
+      <bpmn:extensionElements>
+        <camunda:in businessKey="#{execution.processBusinessKey}" />
+        <camunda:inputOutput>
+          <camunda:inputParameter name="test1">hhhhhhhhh</camunda:inputParameter>
+          <camunda:inputParameter name="directManagerVar">${directManager}</camunda:inputParameter>
+        </camunda:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1lqgxrc</bpmn:incoming>
+      <bpmn:outgoing>Flow_0bfnrf8</bpmn:outgoing>
+    </bpmn:callActivity>
     <bpmn:boundaryEvent id="Event_141upvo" name="Chỉnh sửa thông tin" attachedToRef="two_eyes">
       <bpmn:outgoing>Flow_1bwxnug</bpmn:outgoing>
       <bpmn:errorEventDefinition id="ErrorEventDefinition_06uwfsv" errorRef="Error_1dqef5f" camunda:errorCodeVariable="rejectCode" camunda:errorMessageVariable="rejectMessage" />
     </bpmn:boundaryEvent>
-    <bpmn:sequenceFlow id="Flow_0cq915r" sourceRef="Event_1pa84xy" targetRef="Event_1x4wikn" />
-    <bpmn:sequenceFlow id="Flow_1bwxnug" sourceRef="Event_141upvo" targetRef="Activity_1dvhjke" />
-    <bpmn:sequenceFlow id="Flow_1lbbgml" sourceRef="Event_0yoimwh" targetRef="Activity_1dvhjke" />
-    <bpmn:sequenceFlow id="Flow_0g2xe5y" sourceRef="Activity_1dvhjke" targetRef="two_eyes" />
-    <bpmn:sequenceFlow id="Flow_0bfnrf8" sourceRef="two_eyes" targetRef="Event_1ha6mzn" />
+    <bpmn:exclusiveGateway id="Gateway_0om3vk8">
+      <bpmn:incoming>Flow_0g2xe5y</bpmn:incoming>
+      <bpmn:outgoing>Flow_1lqgxrc</bpmn:outgoing>
+      <bpmn:outgoing>Flow_0hyamwh</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="Flow_1lqgxrc" sourceRef="Gateway_0om3vk8" targetRef="two_eyes">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">#{action == 'SUBMIT'}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_0hyamwh" sourceRef="Gateway_0om3vk8" targetRef="Event_1ha6mzn">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">#{action == 'CLOSE'}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
   </bpmn:process>
   <bpmn:error id="Error_1dqef5f" name="Reject_Error" errorCode="REJECT_CODE" camunda:errorMessage="Thiếu thông tin" />
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
@@ -69,23 +86,14 @@
       <bpmndi:BPMNShape id="Lane_0d02sp5_di" bpmnElement="Lane_0d02sp5" isHorizontal="true">
         <dc:Bounds x="190" y="80" width="850" height="380" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_07htigq_di" bpmnElement="Event_1x4wikn">
-        <dc:Bounds x="592" y="362" width="36" height="36" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="569" y="405" width="83" height="27" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0wyzhho_di" bpmnElement="Activity_1dvhjke">
         <dc:Bounds x="460" y="210" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_1ha6mzn_di" bpmnElement="Event_1ha6mzn">
         <dc:Bounds x="942" y="232" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="919" y="275" width="83" height="14" />
+          <dc:Bounds x="918" y="208" width="83" height="14" />
         </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_17g357d_di" bpmnElement="two_eyes">
-        <dc:Bounds x="700" y="210" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_0yoimwh_di" bpmnElement="Event_0yoimwh">
         <dc:Bounds x="272" y="232" width="36" height="36" />
@@ -93,11 +101,17 @@
           <dc:Bounds x="247" y="278" width="86" height="53" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_080cg1o_di" bpmnElement="Event_141upvo">
-        <dc:Bounds x="732" y="192" width="36" height="36" />
+      <bpmndi:BPMNShape id="Event_07htigq_di" bpmnElement="Event_1x4wikn">
+        <dc:Bounds x="492" y="372" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="579" y="106" width="82" height="27" />
+          <dc:Bounds x="469" y="415" width="83" height="27" />
         </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_17g357d_di" bpmnElement="two_eyes">
+        <dc:Bounds x="780" y="210" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_0om3vk8_di" bpmnElement="Gateway_0om3vk8" isMarkerVisible="true">
+        <dc:Bounds x="635" y="225" width="50" height="50" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_1wmtekq_di" bpmnElement="Event_1pa84xy">
         <dc:Bounds x="492" y="272" width="36" height="36" />
@@ -105,14 +119,19 @@
           <dc:Bounds x="398" y="315" width="84" height="53" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_080cg1o_di" bpmnElement="Event_141upvo">
+        <dc:Bounds x="812" y="192" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="659" y="106" width="82" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_0cq915r_di" bpmnElement="Flow_0cq915r">
         <di:waypoint x="510" y="308" />
-        <di:waypoint x="510" y="380" />
-        <di:waypoint x="592" y="380" />
+        <di:waypoint x="510" y="372" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1bwxnug_di" bpmnElement="Flow_1bwxnug">
-        <di:waypoint x="750" y="192" />
-        <di:waypoint x="750" y="140" />
+        <di:waypoint x="830" y="192" />
+        <di:waypoint x="830" y="140" />
         <di:waypoint x="510" y="140" />
         <di:waypoint x="510" y="210" />
       </bpmndi:BPMNEdge>
@@ -122,11 +141,21 @@
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0g2xe5y_di" bpmnElement="Flow_0g2xe5y">
         <di:waypoint x="560" y="250" />
-        <di:waypoint x="700" y="250" />
+        <di:waypoint x="635" y="250" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0bfnrf8_di" bpmnElement="Flow_0bfnrf8">
-        <di:waypoint x="800" y="250" />
+        <di:waypoint x="880" y="250" />
         <di:waypoint x="942" y="250" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1lqgxrc_di" bpmnElement="Flow_1lqgxrc">
+        <di:waypoint x="685" y="250" />
+        <di:waypoint x="780" y="250" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0hyamwh_di" bpmnElement="Flow_0hyamwh">
+        <di:waypoint x="660" y="275" />
+        <di:waypoint x="660" y="350" />
+        <di:waypoint x="960" y="350" />
+        <di:waypoint x="960" y="268" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>

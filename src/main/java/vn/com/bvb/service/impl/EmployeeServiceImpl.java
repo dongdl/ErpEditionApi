@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import org.apache.commons.lang3.StringUtils;
 import org.camunda.bpm.engine.ProcessEngine;
 import org.camunda.bpm.engine.TaskService;
 import org.camunda.bpm.engine.runtime.ProcessInstanceWithVariables;
@@ -134,7 +133,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 				.employeeId(laborStaffApprovalDTO.getEmployeeId())
 				.taskId(taskId)
 				.type(RecruitmentApprovalDetailType.LABOR_STAFF)
-				.action("SUBMIT")
+				.action(laborStaffApprovalDTO.getAction())
 				.commentCode(laborStaffApprovalDTO.getCommentCode())
 				.commentTitle(laborStaffApprovalDTO.getCommentTitle())
 				.commentDetail(laborStaffApprovalDTO.getCommentDetail())
@@ -142,6 +141,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 		approvalDetailRepository.save(approvalDetail);
 		
 		Map<String, Object> assigneeVariables = new HashMap<>();
+		assigneeVariables.put("action", laborStaffApprovalDTO.getAction());
 		assigneeVariables.put("directManager", "manager1");
 	    taskService.complete(taskId, assigneeVariables);
 	}

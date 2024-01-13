@@ -1,6 +1,4 @@
-package vn.com.bvb.camunda.listener;
-
-import java.util.List;
+package vn.com.bvb.camunda.listener.create;
 
 import org.camunda.bpm.engine.delegate.DelegateTask;
 import org.camunda.bpm.engine.delegate.TaskListener;
@@ -43,13 +41,7 @@ public class DirectManagerListener implements TaskListener {
 		Employee employee = employeeRepository.findByCode(businessKey)
 				.orElseThrow(() -> new NullPointerException("Not Found Employee with code=" + businessKey));
 		
-		logger.info("Update WAIT_PROCESSING task ------> PROCESSING task");
-		List<RecruitmentUserTask> recruitmentUserTasks = recruitmentUserTaskRepository
-				.findByEmployeeIdAndStatus(employee.getId(), ApprovalStatus.WAIT_PROCESSING.getStatus());
-		recruitmentUserTasks.forEach(recruitmentUserTask -> recruitmentUserTask.setStatus(ApprovalStatus.PROCESSING.getStatus()));
-		recruitmentUserTaskRepository.saveAll(recruitmentUserTasks);
-		
-		logger.info("Creating UserTask for 'Cán bộ tuyển dụng'");
+		logger.info("Creating UserTask for 'Quản lý trực tiếp'");
 		RecruitmentUserTask recruitmentUserTask = RecruitmentUserTask.builder()
 				.employeeId(employee.getId())
 				.assignee(assignee)

@@ -15,8 +15,11 @@ public class LaborStaffApprovalDTO {
 	
 	private long recruitmentUserTaskId;
 	
+	//Đẩy lên hoặc đóng hồ sơ
+	private String action;
+	
 	private long employeeId;
-
+	
 	private String commentCode;
 	
 	private String commentTitle;

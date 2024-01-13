@@ -1,6 +1,4 @@
-package vn.com.bvb.camunda.listener;
-
-import java.util.List;
+package vn.com.bvb.camunda.listener.create;
 
 import org.camunda.bpm.engine.delegate.DelegateTask;
 import org.camunda.bpm.engine.delegate.TaskListener;
@@ -20,7 +18,7 @@ import vn.com.bvb.repository.RecruitmentUserTaskRepository;
 
 @Component
 @AllArgsConstructor
-public class LaborStaffListener implements TaskListener {
+public class SeniorDirectManagerListener implements TaskListener {
 
 	private final Logger logger = LoggerFactory.getLogger(getClass());
 
@@ -43,13 +41,7 @@ public class LaborStaffListener implements TaskListener {
 		Employee employee = employeeRepository.findByCode(businessKey)
 				.orElseThrow(() -> new NullPointerException("Not Found Employee with code=" + businessKey));
 
-		logger.info("Update WAIT_PROCESSING task ------> PROCESSING task");
-		List<RecruitmentUserTask> recruitmentUserTasks = recruitmentUserTaskRepository
-				.findByEmployeeIdAndStatus(employee.getId(), ApprovalStatus.WAIT_PROCESSING.getStatus());
-		recruitmentUserTasks.forEach(recruitmentUserTask -> recruitmentUserTask.setStatus(ApprovalStatus.PROCESSING.getStatus()));
-		recruitmentUserTaskRepository.saveAll(recruitmentUserTasks);
-		
-		logger.info("Creating UserTask for 'Cán bộ tuyển dụng'");
+		logger.info("Creating UserTask for 'Cán bộ trên một cấp'");
 		RecruitmentUserTask recruitmentUserTask = RecruitmentUserTask.builder()
 				.employeeId(employee.getId())
 				.assignee(assignee)
@@ -64,7 +56,6 @@ public class LaborStaffListener implements TaskListener {
 				.assignee(assignee)
 				.build();
 		approvalHistoryRepository.save(approvalHistory);
-		
 	}
 
 }

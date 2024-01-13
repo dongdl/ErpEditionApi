@@ -28,6 +28,7 @@
     <bpmn:userTask id="Activity_0olfk7e" name="5. Xem xét và đưa ra ý kiến" camunda:assignee="${directManager}">
       <bpmn:extensionElements>
         <camunda:taskListener delegateExpression="#{directManagerListener}" event="create" />
+        <camunda:taskListener delegateExpression="#{completeRecruitmentListener}" event="complete" />
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_0be7nf6</bpmn:incoming>
       <bpmn:outgoing>Flow_03pkzmk</bpmn:outgoing>
@@ -38,6 +39,7 @@
     <bpmn:userTask id="Activity_17lzmb8" name="6. Xem xét và đưa ra ý kiến" camunda:assignee="${seniorDirectManager}">
       <bpmn:extensionElements>
         <camunda:taskListener delegateExpression="#{seniorDirectManagerListener}" event="create" />
+        <camunda:taskListener delegateExpression="#{completeRecruitmentListener}" event="complete" />
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_03pkzmk</bpmn:incoming>
       <bpmn:outgoing>Flow_0ta8j2r</bpmn:outgoing>
