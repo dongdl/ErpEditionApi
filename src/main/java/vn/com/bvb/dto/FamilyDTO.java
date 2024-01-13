@@ -2,6 +2,7 @@ package vn.com.bvb.dto;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,6 +18,8 @@ public class FamilyDTO extends BaseEntityDTO {
 
 	private String relationShip; // Quan hệ"
 	private String name; // Họ tên"
+	
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
 	private Date birthday; // Ngày sinh"
 	private int gender; // Giới tính"
 	private String job; // Nghề nghiệp"

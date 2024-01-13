@@ -17,7 +17,6 @@ public class JerseyConfig extends CamundaJerseyResourceConfig {
 	protected void registerAdditionalResources() {
 		packages("vn.com.bvb.controller");
 		register(OpenApiResource.class);
-
 	}
 
 }

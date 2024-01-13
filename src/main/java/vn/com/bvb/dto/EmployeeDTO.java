@@ -3,6 +3,8 @@ package vn.com.bvb.dto;
 import java.util.Collection;
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -35,13 +37,18 @@ public class EmployeeDTO extends BaseEntityDTO {
 	private String status;
 
 	private String photo; // Ảnh thẻ
+	
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
 	private Date birthday; // Ngày sinh
 	private int gender; // Giới tính
 	private String addressCode; // Nơi sinh
 	private String addressEx; // Xóm phố, số nhà…
 	private String ethnicCode; // Dân tộc
 	private Boolean isParty; // Là đảng viên
+	
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
 	private Date partyDate; // Ngày vào đảng
+	
 	private String partyPosition; // Chức vụ
 	private String partyAddress; // Nơi vào đảng
 	private Boolean isArmy; // Quân đội
@@ -62,16 +69,26 @@ public class EmployeeDTO extends BaseEntityDTO {
 	private String maritalStatus; // Tình trạng hôn nhân (Độc thân/Có gđ/…)
 	private String contactAddress; // Thông tin liên hệ khi cần
 	private String contactPhone; // Số điện thoại liên hệ khi cần
+	
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
 	private Date probationaryDontractDate; // Ngày vào ngân hàng (Ngày quyết định tuyển dụng đầu tiên)
+	
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
 	private Date officialContractDate; // Ngày hợp đồng chính thức
+	
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
 	private Date positionDate; // Ngày bổ nhiệm chức danh hiện tại.
+	
 	private String academicLevel; // Trình độ học vấn
 	private String foreignLanguage; // Trình độ ngoại ngữ
 	private String nationalityCode; // Quốc tịch
 	private String description;
 
 	private String recruitmentSource; // Nguồn tuyển dụng
+	
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
 	private Date interviewDate; // Ngày phỏng vấn
+	
 	private String recruitmentMinutes; // Biên bản tuyển dụng số
 	private String recruitmentProposal; // Đề nghị tuyển dụng số
 	private String referName; // Thông tin tham khảo - Họ tên
@@ -91,18 +108,28 @@ public class EmployeeDTO extends BaseEntityDTO {
 	private String referOtherLocation; // Thông tin tham khảo khác - Vị trí
 	private String referOtherDate; // Thông tin tham khảo khác - Thời gian
 
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
 	private Date contractRealDate; // Thông tin HĐLĐ ban đầu - Ngày vào thực tế
 	private String contractRealShortDate; // Thông tin HĐLĐ ban đầu - Tháng/Năm
 	private int contractType; // Thông tin HĐLĐ ban đầu - Loại hợp đồng (=1:Học việc;=2:thử việc;=3:chính
 								// thức;=99:Other)
+	
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
 	private Date contractDurationDate; // Thông tin HĐLĐ ban đầu - Thời hạn hợp đồng
+	
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
 	private Date contractBeginDate; // Thông tin HĐLĐ ban đầu - HĐLĐ: Ngày bắt đầu
+	
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
 	private Date contractEndDate; // Thông tin HĐLĐ ban đầu - HĐLĐ: Ngày kết thúc
 
 	private Double salaryApprentice; // Thông tin thu nhập - Lương học việc
 	private Double salaryProbation; // Thông tin thu nhập - Lương thử việc
 	private Double salaryOfficial; // Thông tin thu nhập - Lương chính thức
+	
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
 	private Date salaryOfficialDate; // Thông tin thu nhập - Ngày chính thức
+	
 	private Double salaryInsurance; // Thông tin thu nhập - LCB tham gia bảo hiểm
 	private Double salaryAllowance1; // Thông tin thu nhập - Phụ cấp 1
 	private Double salaryAllowance2; // Thông tin thu nhập - Phụ cấp 2
