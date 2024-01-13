@@ -6,7 +6,8 @@ spring:
         jdbc:
           fetch_size: 20
           batch_size: 20
-        max_fetch_depth: 10  
+        max_fetch_depth: 10
+        format_sql: true
     generate-ddl: true
     ddl-auto: create
     show-sql: true

@@ -1,7 +1,9 @@
 package vn.com.bvb.service.impl;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.StringUtils;
 import org.camunda.bpm.engine.ProcessEngine;
@@ -22,10 +24,12 @@ import vn.com.bvb.dto.LaborStaffApprovalDTO;
 import vn.com.bvb.dto.SeniorDirectManagerApprovalDTO;
 import vn.com.bvb.entity.ApprovalDetail;
 import vn.com.bvb.entity.Employee;
+import vn.com.bvb.entity.Family;
 import vn.com.bvb.entity.RecruitmentUserTask;
 import vn.com.bvb.mapper.EmployeeMappingManager;
 import vn.com.bvb.repository.ApprovalDetailRepository;
 import vn.com.bvb.repository.EmployeeRepository;
+import vn.com.bvb.repository.FamilyRepository;
 import vn.com.bvb.repository.RecruitmentUserTaskRepository;
 import vn.com.bvb.service.EmployeeService;
 import vn.com.bvb.utils.EmployeeUtils;
@@ -43,6 +47,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 	private EmployeeRepository employeeRepository;
 	
 	private RecruitmentUserTaskRepository recruitmentUserTaskRepository;
+	
+	private FamilyRepository familyRepository;
 	
 	private ApprovalDetailRepository approvalDetailRepository;
 	
@@ -62,17 +68,39 @@ public class EmployeeServiceImpl implements EmployeeService {
 		
 		String employeeCode = employeeDTO.getCode();
 		
-		if ( StringUtils.isBlank(employeeCode)) {
+		Employee employee = employeeMappingManager.map(employeeDTO);
+		
+		if (!CollectionUtils.isEmpty(employee.getFamilies())) {
+			employee.getFamilies().forEach(family -> family.setEmployee(employee));
+		}
+		
+		if (StringUtils.isBlank(employeeCode)) {
 			logger.info("Start new recruitment process ......>>>>");
 			employeeCode = EmployeeUtils.generateEmployeeCode();
-			employeeDTO.setCode(employeeCode);
-			Employee employee = employeeMappingManager.map(employeeDTO);
-			if (!CollectionUtils.isEmpty(employee.getFamilies())) {
-				employee.getFamilies().forEach(family -> family.setEmployee(employee));
-			}
+			employee.setCode(employeeCode);
+		} else {
+			logger.info("Update existing recruitment information for employeeCode = {} >>>>>>", employeeCode);
+			List<Family> families = familyRepository.findByEmployeeId(employeeDTO.getId());
 			
-			employeeRepository.save(employee);
+			List<Family> deletedFamilies = families.stream()
+					.filter(curFamily -> {
+						if (!CollectionUtils.isEmpty(employee.getFamilies())) {
+							return !employee.getFamilies()
+										.stream()
+										.filter(subFamily -> curFamily.getId() == subFamily.getId())
+										.findFirst()
+										.isPresent();
+						} else {
+							return true;
+						}
+					}).collect(Collectors.toList());
+			familyRepository.deleteAll(deletedFamilies);
 			
+		}
+		
+		employeeRepository.save(employee);
+		
+		if (StringUtils.isBlank(employeeCode)) {
 			Map<String, Object> variables = new HashMap<>();
 			variables.put("user", "user");
 			variables.put("existingPosition", false);
@@ -85,17 +113,10 @@ public class EmployeeServiceImpl implements EmployeeService {
 		    logger.info("Created Recruitement Process with businessKey={}, processIntanceId={}",
 		    		instance.getBusinessKey(), 
 		    		instance.getProcessInstanceId());
-		    
-		    return employeeMappingManager.map(employee);	
-		} else {
-			logger.info("Update existing recruitment information for employeeCode = {} >>>>>>", employeeCode);
-			Employee employee = employeeRepository.findByCode(employeeCode)
-					.orElseThrow(() -> new IllegalArgumentException("Employee is not existing with code " + employeeDTO.getCode()));
-			
-			return employeeMappingManager.map(employee);
 		}
 		
-	   
+		
+		return employeeMappingManager.map(employee);
 	}
 	
 	@Override

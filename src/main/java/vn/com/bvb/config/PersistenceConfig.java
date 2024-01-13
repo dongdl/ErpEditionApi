@@ -45,6 +45,7 @@ public class PersistenceConfig extends HikariConfig {
 	private static final String PROPERTY_NAME_HIBERNATE_JDBC_FETCH_SIZE = "hibernate.jdbc.fetch_size";
 	private static final String PROPERTY_NAME_HIBERNATE_JDBC_BATCH_SIZE = "hibernate.jdbc.batch_size";
 	private static final String PROPERTY_NAME_HIBERNATE_SHOW_SQL = "hibernate.show_sql";
+	private static final String PROPERTY_NAME_HIBERNATE_FORMAT_SQL = "hibernate.format_sql";
 	private static final String PROPERTY_NAME_HIBERNATE_DDL_AUTO = "hibernate.hbm2ddl.auto";
 
 
@@ -87,6 +88,8 @@ public class PersistenceConfig extends HikariConfig {
         properties.put(PROPERTY_NAME_HIBERNATE_JDBC_BATCH_SIZE, env.getProperty("spring.jpa.properties.hibernate.jdbc.batch_size"));
         properties.put(PROPERTY_NAME_HIBERNATE_SHOW_SQL, env.getProperty("spring.jpa.show-sql"));
         properties.put(PROPERTY_NAME_HIBERNATE_DDL_AUTO, env.getProperty("spring.jpa.ddl-auto"));
+        properties.put(PROPERTY_NAME_HIBERNATE_FORMAT_SQL, env.getProperty("spring.jpa.properties.hibernate.format_sql"));
+
         logger.info(properties.toString());
 
         return properties;
