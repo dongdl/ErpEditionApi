@@ -1,5 +1,7 @@
 package vn.com.bvb.camunda.listener.create;
 
+import java.util.Optional;
+
 import org.camunda.bpm.engine.delegate.DelegateTask;
 import org.camunda.bpm.engine.delegate.TaskListener;
 import org.slf4j.Logger;
@@ -41,14 +43,24 @@ public class DirectManagerListener implements TaskListener {
 		Employee employee = employeeRepository.findByCode(businessKey)
 				.orElseThrow(() -> new NullPointerException("Not Found Employee with code=" + businessKey));
 		
-		logger.info("Creating UserTask for 'Quản lý trực tiếp'");
-		RecruitmentUserTask recruitmentUserTask = RecruitmentUserTask.builder()
-				.employeeId(employee.getId())
-				.assignee(assignee)
-				.taskId(delegateTask.getId())
-				.status(ApprovalStatus.WAIT_PROCESSING.getStatus())
-				.build();
-		recruitmentUserTaskRepository.save(recruitmentUserTask);
+		Optional<RecruitmentUserTask> recruitmentUserTaskOptional = recruitmentUserTaskRepository
+				.findByEmployeeIdAndAssignee(employee.getId(), assignee);
+		if (recruitmentUserTaskOptional.isPresent()) {
+			logger.info("Update PROCESSING task ------> WAIT_PROCESSING task");
+			RecruitmentUserTask recruitmentUserTask = recruitmentUserTaskOptional.get();
+			recruitmentUserTask.setTaskId(delegateTask.getId());
+			recruitmentUserTask.setStatus(ApprovalStatus.WAIT_PROCESSING.getStatus());
+			recruitmentUserTaskRepository.save(recruitmentUserTask);
+		} else {
+			logger.info("Creating UserTask for 'Cán bộ quản lý trực tiếp'");
+			RecruitmentUserTask recruitmentUserTask = RecruitmentUserTask.builder()
+					.employeeId(employee.getId())
+					.assignee(assignee)
+					.taskId(delegateTask.getId())
+					.status(ApprovalStatus.WAIT_PROCESSING.getStatus())
+					.build();
+			recruitmentUserTaskRepository.save(recruitmentUserTask);
+		}
 		
 		ApprovalHistory approvalHistory = ApprovalHistory.builder()
 				.employeeId(employee.getId())
@@ -57,5 +69,4 @@ public class DirectManagerListener implements TaskListener {
 				.build();
 		approvalHistoryRepository.save(approvalHistory);
 	}
-
 }
