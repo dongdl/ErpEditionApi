@@ -40,15 +40,15 @@ public class SeniorDirectManagerListener implements TaskListener {
 		logger.info("processInstanceId = {}, businessKey = {}, assignee = {}", 
 				processInstanceId, businessKey, assignee);
 		
-		logger.info("Update WAIT_PROCESSING task ------> PROCESSING task");
-		List<RecruitmentUserTask> recruitmentUserTasks = recruitmentUserTaskRepository
-				.findByStatus(ApprovalStatus.WAIT_PROCESSING.getStatus());
-		recruitmentUserTasks.forEach(recruitmentUserTask -> recruitmentUserTask.setStatus(ApprovalStatus.PROCESSING.getStatus()));
-		recruitmentUserTaskRepository.saveAll(recruitmentUserTasks);
-		
 		Employee employee = employeeRepository.findByCode(businessKey)
 				.orElseThrow(() -> new NullPointerException("Not Found Employee with code=" + businessKey));
 
+		logger.info("Update WAIT_PROCESSING task ------> PROCESSING task");
+		List<RecruitmentUserTask> recruitmentUserTasks = recruitmentUserTaskRepository
+				.findByEmployeeIdAndStatus(employee.getId(), ApprovalStatus.WAIT_PROCESSING.getStatus());
+		recruitmentUserTasks.forEach(recruitmentUserTask -> recruitmentUserTask.setStatus(ApprovalStatus.PROCESSING.getStatus()));
+		recruitmentUserTaskRepository.saveAll(recruitmentUserTasks);
+		
 		logger.info("Creating UserTask for 'Cán bộ tuyển dụng'");
 		RecruitmentUserTask recruitmentUserTask = RecruitmentUserTask.builder()
 				.employeeId(employee.getId())

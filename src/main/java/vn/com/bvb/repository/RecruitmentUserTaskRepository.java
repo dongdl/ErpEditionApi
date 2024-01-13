@@ -10,7 +10,7 @@ public interface RecruitmentUserTaskRepository extends CrudRepository<Recruitmen
 
 	List<RecruitmentUserTask> findByAssignee(String assignee);
 	
-	List<RecruitmentUserTask> findByStatus(String status);
+	List<RecruitmentUserTask> findByEmployeeIdAndStatus(long employeeId, String status);
 	
 	List<RecruitmentUserTask> findByAssigneeAndStatus(String assignee, String status);
 
