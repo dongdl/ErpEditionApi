@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import lombok.AllArgsConstructor;
 import vn.com.bvb.dto.ApprovalHistoryDTO;
@@ -24,6 +25,7 @@ public class ApprovalHistoryServiceImpl implements ApprovalHistoryService {
 	private ApprovalHistoryMappingManager approvalHistoryMappingManager;
 
 	@Override
+	@Transactional
 	public List<ApprovalHistoryDTO> findAll(long employeeId) {
 		logger.info("Get All Approval History by employeeId = {}", employeeId);
 		return approvalHistoryRepository.findByEmployeeId(employeeId)
