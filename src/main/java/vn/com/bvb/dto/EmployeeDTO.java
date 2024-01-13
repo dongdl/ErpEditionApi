@@ -7,7 +7,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
-import vn.com.bvb.entity.Family;
 
 @Getter
 @Setter
@@ -129,6 +128,6 @@ public class EmployeeDTO extends BaseEntityDTO {
 	private String language2Description; // NGOẠI NGỮ: Ghi chú
 	private String languageOther;
 
-	private Collection<Family> families;
+	private Collection<FamilyDTO> families;
 
 }

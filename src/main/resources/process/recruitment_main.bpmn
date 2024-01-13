@@ -19,7 +19,7 @@
       <bpmn:incoming>Flow_0cq915r</bpmn:incoming>
       <bpmn:messageEventDefinition id="MessageEventDefinition_0s6xv0c" camunda:delegateExpression="#{sendNotificationToLaborManagementStaff}" />
     </bpmn:endEvent>
-    <bpmn:userTask id="Activity_1dvhjke" name="1. Nhập thông tin tuyển dụng">
+    <bpmn:userTask id="Activity_1dvhjke" name="1. Nhập thông tin tuyển dụng" camunda:assignee="${user}">
       <bpmn:extensionElements>
         <camunda:taskListener delegateExpression="#{startRecruitmentListener}" event="create" />
       </bpmn:extensionElements>

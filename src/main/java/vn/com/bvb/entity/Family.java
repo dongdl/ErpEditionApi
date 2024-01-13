@@ -2,6 +2,7 @@ package vn.com.bvb.entity;
 
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -68,7 +69,7 @@ public class Family extends BaseEntityDTO {
 	private String description; 
 	
 	// Many to One Có nhiều thành viên trong một gia đình.
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name="employeeId") // thông qua khóa ngoại employeeId
     @EqualsAndHashCode.Exclude
     @ToString.Exclude

@@ -11,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 
 import lombok.AllArgsConstructor;
 import vn.com.bvb.constants.ProcessDefinitionKeys;
@@ -60,11 +61,14 @@ public class EmployeeServiceImpl implements EmployeeService {
 		String employeeCode = EmployeeUtils.generateEmployeeCode();
 		employeeDTO.setCode(employeeCode);
 		Employee employee = employeeMappingManager.map(employeeDTO);
+		if (!CollectionUtils.isEmpty(employee.getFamilies())) {
+			employee.getFamilies().forEach(family -> family.setEmployee(employee));
+		}
 		
 		employeeRepository.save(employee);
 		
-		
 		Map<String, Object> variables = new HashMap<>();
+		variables.put("user", "user");
 		variables.put("existingPosition", false);
 	    ProcessInstanceWithVariables instance = processEngine.getRuntimeService().
 	    		createProcessInstanceByKey(ProcessDefinitionKeys.EmployeeKeys.RECRUITMENT)
@@ -80,9 +84,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 	    Task task = taskService.createTaskQuery()
 	    		.processInstanceId(processInstanceId)
 	    		.singleResult();
-	    
-	    taskService.setAssignee(task.getId(), "demo");
-	    
+	    	    
 		Map<String, Object> assigneeVariables = new HashMap<>();
 		assigneeVariables.put("directManager", "manager1");
 	    taskService.complete(task.getId(), assigneeVariables);

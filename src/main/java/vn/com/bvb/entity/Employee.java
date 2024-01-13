@@ -251,14 +251,12 @@ public class Employee extends BaseEntityDTO {
 	@ToString.Exclude
 	private Department department;
 
-	// Reference 1-n với đối tượng ở dưới (Family)(1 người có nhiều con hoặc người
-	// thân
+	// Reference 1-n với đối tượng ở dưới (Family)(1 người có nhiều con hoặc người thân
 	@OneToMany(mappedBy = "employee", cascade = CascadeType.ALL)
-	// mappedBy trỏ tới tên biến Employee ở trong Family.
 	@EqualsAndHashCode.Exclude // không sử dụng trường này trong equals và hashcode
 	@ToString.Exclude // Không sử dụng trong toString()
 	private Collection<Family> families;
-
+	
 	@OneToMany(mappedBy = "employee", cascade = CascadeType.ALL)
 	@EqualsAndHashCode.Exclude // không sử dụng trường này trong equals và hashcode
 	@ToString.Exclude // Không sử dụng trong toString()

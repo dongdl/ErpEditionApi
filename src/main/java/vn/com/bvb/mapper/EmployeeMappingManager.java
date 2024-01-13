@@ -6,11 +6,10 @@ import vn.com.bvb.dto.EmployeeDTO;
 import vn.com.bvb.entity.Employee;
 
 @Mapper(componentModel = "spring")
-public interface EmployeeMappingManager {
+public abstract class EmployeeMappingManager {
 	
-	EmployeeDTO map(Employee employee);
+	public abstract EmployeeDTO map(Employee employee);
 	
-	Employee map(EmployeeDTO employeeDTO);
-
+	public abstract Employee map(EmployeeDTO employeeDTO);
 
 }
