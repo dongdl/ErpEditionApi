@@ -3,6 +3,8 @@ package vn.com.bvb.dto;
 import java.util.Collection;
 import java.util.Date;
 
+import org.apache.commons.lang3.StringUtils;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import lombok.Getter;
@@ -156,5 +158,9 @@ public class EmployeeDTO extends BaseEntityDTO {
 	private String languageOther;
 
 	private Collection<FamilyDTO> families;
+	
+	public boolean isNewlyCreated() {
+		return StringUtils.isBlank(this.code);
+	}
 
 }

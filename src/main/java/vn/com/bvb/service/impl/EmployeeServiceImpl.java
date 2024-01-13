@@ -74,7 +74,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 			employee.getFamilies().forEach(family -> family.setEmployee(employee));
 		}
 		
-		if (StringUtils.isBlank(employeeCode)) {
+		if (employeeDTO.isNewlyCreated()) {
 			logger.info("Start new recruitment process ......>>>>");
 			employeeCode = EmployeeUtils.generateEmployeeCode();
 			employee.setCode(employeeCode);
@@ -102,7 +102,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 		
 		employeeRepository.save(employee);
 		
-		if (StringUtils.isBlank(employeeCode)) {
+		if (employeeDTO.isNewlyCreated()) {
 			Map<String, Object> variables = new HashMap<>();
 			variables.put("user", "user");
 			variables.put("existingPosition", false);
