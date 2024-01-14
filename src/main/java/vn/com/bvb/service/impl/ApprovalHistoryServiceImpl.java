@@ -28,7 +28,7 @@ public class ApprovalHistoryServiceImpl implements ApprovalHistoryService {
 	@Transactional
 	public List<ApprovalHistoryDTO> findAll(long employeeId) {
 		logger.info("Get All Approval History by employeeId = {}", employeeId);
-		return approvalHistoryRepository.findByEmployeeId(employeeId)
+		return approvalHistoryRepository.findByEmployeeIdOrderByIdDesc(employeeId)
 				.stream()
 				.map(approvalHistory -> approvalHistoryMappingManager.map(approvalHistory))
 				.collect(Collectors.toList());

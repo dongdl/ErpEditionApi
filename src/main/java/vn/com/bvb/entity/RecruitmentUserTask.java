@@ -2,9 +2,12 @@ package vn.com.bvb.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,7 +19,8 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @NoArgsConstructor
 @Entity(name = "recruitment_user_task")
-public class RecruitmentUserTask {
+@EntityListeners(AuditingEntityListener.class)
+public class RecruitmentUserTask extends BaseEntity {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

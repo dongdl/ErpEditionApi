@@ -1,12 +1,13 @@
 package vn.com.bvb.entity;
 
-import vn.com.bvb.dto.BaseEntityDTO;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,7 +19,8 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @NoArgsConstructor
 @Entity(name = "ethnic") // Dân tộc
-public class Ethnic extends BaseEntityDTO {
+@EntityListeners(AuditingEntityListener.class)
+public class Ethnic extends BaseEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;

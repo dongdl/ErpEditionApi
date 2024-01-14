@@ -9,13 +9,15 @@ import lombok.experimental.SuperBuilder;
 @Setter
 @SuperBuilder
 @NoArgsConstructor
-public class ApprovalHistoryDTO {
+public class ApprovalHistoryDTO extends BaseEntityDTO {
 	
 	private long id;
 
 	private long employeeId;
 
 	private String taskId;
+	
+	private String taskName;
 	
 	private String assignee;
 }

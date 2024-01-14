@@ -8,5 +8,5 @@ import vn.com.bvb.entity.ApprovalHistory;
 
 public interface ApprovalHistoryRepository extends JpaRepository<ApprovalHistory,Long> { //extends CrudRepository<Employee, Long> {
 
-	List<ApprovalHistory> findByEmployeeId(long employeeId);
+	List<ApprovalHistory> findByEmployeeIdOrderByIdDesc(long employeeId);
 }

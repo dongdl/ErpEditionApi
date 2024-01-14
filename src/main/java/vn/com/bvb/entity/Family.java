@@ -5,11 +5,14 @@ import java.util.Date;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -17,14 +20,14 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
-import vn.com.bvb.dto.BaseEntityDTO;
 
 @Getter
 @Setter
 @SuperBuilder
 @NoArgsConstructor
 @Entity(name = "family")
-public class Family extends BaseEntityDTO {
+@EntityListeners(AuditingEntityListener.class)
+public class Family extends BaseEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;

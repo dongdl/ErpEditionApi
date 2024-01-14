@@ -65,6 +65,7 @@ public class LaborStaffListener implements TaskListener {
 		ApprovalHistory approvalHistory = ApprovalHistory.builder()
 				.employeeId(employee.getId())
 				.taskId(delegateTask.getId())
+				.taskName(delegateTask.getName())
 				.assignee(assignee)
 				.build();
 		approvalHistoryRepository.save(approvalHistory);

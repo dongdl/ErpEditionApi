@@ -6,6 +6,7 @@ import java.util.Date;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -13,13 +14,14 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
-import vn.com.bvb.dto.BaseEntityDTO;
 
 // https://loda.me/articles/jpahuong-dan-onetomany-va-manytoone
 @Getter
@@ -27,7 +29,8 @@ import vn.com.bvb.dto.BaseEntityDTO;
 @SuperBuilder
 @NoArgsConstructor
 @Entity(name = "employee")
-public class Employee extends BaseEntityDTO {
+@EntityListeners(AuditingEntityListener.class)
+public class Employee extends BaseEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
