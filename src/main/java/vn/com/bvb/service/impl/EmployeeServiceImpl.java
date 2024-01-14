@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import org.apache.commons.lang3.StringUtils;
 import org.camunda.bpm.engine.ProcessEngine;
 import org.camunda.bpm.engine.TaskService;
 import org.camunda.bpm.engine.runtime.ProcessInstanceWithVariables;
@@ -196,9 +195,6 @@ public class EmployeeServiceImpl implements EmployeeService {
 		
 		Map<String, Object> assigneeVariables = new HashMap<>();
 		assigneeVariables.put("action", seniorDirectManagerApprovalDTO.getAction());
-		if (StringUtils.isNoneBlank(action) && !action.equalsIgnoreCase("APPROVE")) {
-			assigneeVariables.put("subStatus", "RETURN");
-		}
 	    taskService.complete(taskId, assigneeVariables);
 	}
 

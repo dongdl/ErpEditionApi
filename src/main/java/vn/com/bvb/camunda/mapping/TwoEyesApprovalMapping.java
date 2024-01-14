@@ -29,7 +29,7 @@ public class TwoEyesApprovalMapping implements DelegateVariableMapping {
 
 	@Override
 	public void mapOutputVariables(DelegateExecution superExecution, VariableScope subInstance) {
-
+		
 	}
 
 }
