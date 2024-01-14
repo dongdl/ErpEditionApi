@@ -20,4 +20,6 @@ public class ApprovalHistoryDTO extends BaseEntityDTO {
 	private String taskName;
 	
 	private String assignee;
+	
+	private String commentDetail;
 }
