@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import org.apache.commons.lang3.StringUtils;
 import org.camunda.bpm.engine.ProcessEngine;
 import org.camunda.bpm.engine.TaskService;
 import org.camunda.bpm.engine.runtime.ProcessInstanceWithVariables;
@@ -104,6 +105,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 		if (employeeDTO.isNewlyCreated()) {
 			Map<String, Object> variables = new HashMap<>();
 			variables.put("user", "user");
+			variables.put("subStatus", "NEW");
 			variables.put("existingPosition", false);
 		    ProcessInstanceWithVariables instance = processEngine.getRuntimeService().
 		    		createProcessInstanceByKey(ProcessDefinitionKeys.EmployeeKeys.RECRUITMENT)
@@ -179,12 +181,13 @@ public class EmployeeServiceImpl implements EmployeeService {
 				.orElseThrow(() -> new IllegalArgumentException("RecuitmentUserTask = " + recruitmentUserTaskId + " not existing!!!"));
 		
 		String taskId = recruitmentUserTask.getTaskId();
+		String action = seniorDirectManagerApprovalDTO.getAction();
 		
 		ApprovalDetail approvalDetail = ApprovalDetail.builder()
 				.employeeId(seniorDirectManagerApprovalDTO.getEmployeeId())
 				.taskId(taskId)
 				.type(RecruitmentApprovalDetailType.SENIOR_DIRECT_MANAGER)
-				.action(seniorDirectManagerApprovalDTO.getAction())
+				.action(action)
 				.commentCode(seniorDirectManagerApprovalDTO.getCommentCode())
 				.commentTitle(seniorDirectManagerApprovalDTO.getCommentTitle())
 				.commentDetail(seniorDirectManagerApprovalDTO.getCommentDetail())
@@ -193,6 +196,9 @@ public class EmployeeServiceImpl implements EmployeeService {
 		
 		Map<String, Object> assigneeVariables = new HashMap<>();
 		assigneeVariables.put("action", seniorDirectManagerApprovalDTO.getAction());
+		if (StringUtils.isNoneBlank(action) && !action.equalsIgnoreCase("APPROVE")) {
+			assigneeVariables.put("subStatus", "RETURN");
+		}
 	    taskService.complete(taskId, assigneeVariables);
 	}
 

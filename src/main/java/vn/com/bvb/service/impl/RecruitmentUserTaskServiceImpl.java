@@ -45,6 +45,7 @@ public class RecruitmentUserTaskServiceImpl implements RecruitmentUserTaskServic
 				recruitmentUserTaskDTO.setRecruitmentUserTaskId(recruitmentUserTask.getId());
 				recruitmentUserTaskDTO.setAssignee(assignee);
 				recruitmentUserTaskDTO.setStatus(recruitmentUserTask.getStatus());
+				recruitmentUserTaskDTO.setSubStatus(recruitmentUserTask.getSubStatus());
 				
 				return recruitmentUserTaskDTO;
 			}).collect(Collectors.toList());
@@ -66,7 +67,8 @@ public class RecruitmentUserTaskServiceImpl implements RecruitmentUserTaskServic
 				recruitmentUserTaskDTO.setRecruitmentUserTaskId(recruitmentUserTask.getId());
 				recruitmentUserTaskDTO.setAssignee(assignee);
 				recruitmentUserTaskDTO.setStatus(recruitmentUserTask.getStatus());
-				
+				recruitmentUserTaskDTO.setSubStatus(recruitmentUserTask.getSubStatus());
+
 				return recruitmentUserTaskDTO;
 			}).collect(Collectors.toList());
 	}

@@ -4,6 +4,7 @@ import java.util.Optional;
 
 import org.camunda.bpm.engine.delegate.DelegateTask;
 import org.camunda.bpm.engine.delegate.TaskListener;
+import org.camunda.bpm.engine.variable.impl.value.PrimitiveTypeValueImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -42,6 +43,11 @@ public class LaborStaffListener implements TaskListener {
 		
 		Employee employee = employeeRepository.findByCode(businessKey)
 				.orElseThrow(() -> new NullPointerException("Not Found Employee with code=" + businessKey));
+		
+
+		PrimitiveTypeValueImpl<String> subStatusVarObj = delegateTask.getVariableTyped("subStatus", true);
+		String subStatus = subStatusVarObj.getValue();
+		logger.info("Current SubStatus = {}", subStatus);
 
 		Optional<RecruitmentUserTask> recruitmentUserTaskOptional = recruitmentUserTaskRepository
 				.findByEmployeeIdAndAssignee(employee.getId(), assignee);
@@ -50,6 +56,7 @@ public class LaborStaffListener implements TaskListener {
 			RecruitmentUserTask recruitmentUserTask = recruitmentUserTaskOptional.get();
 			recruitmentUserTask.setTaskId(delegateTask.getId());
 			recruitmentUserTask.setStatus(ApprovalStatus.WAIT_PROCESSING.getStatus());
+			recruitmentUserTask.setSubStatus(subStatus);
 			recruitmentUserTaskRepository.save(recruitmentUserTask);
 		} else {
 			logger.info("Creating UserTask for 'Cán bộ tuyển dụng'");
@@ -58,9 +65,11 @@ public class LaborStaffListener implements TaskListener {
 					.assignee(assignee)
 					.taskId(delegateTask.getId())
 					.status(ApprovalStatus.WAIT_PROCESSING.getStatus())
+					.subStatus(subStatus)
 					.build();
 			recruitmentUserTaskRepository.save(recruitmentUserTask);
 		}
+		
 		
 		ApprovalHistory approvalHistory = ApprovalHistory.builder()
 				.employeeId(employee.getId())

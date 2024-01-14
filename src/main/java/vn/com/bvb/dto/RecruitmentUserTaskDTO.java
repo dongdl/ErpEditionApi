@@ -16,5 +16,7 @@ public class RecruitmentUserTaskDTO extends EmployeeDTO {
 	private String assignee;
 	
 	private String status;
+	
+	private String subStatus;
 
 }

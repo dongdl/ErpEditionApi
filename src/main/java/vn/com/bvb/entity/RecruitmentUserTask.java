@@ -37,5 +37,8 @@ public class RecruitmentUserTask extends BaseEntity {
 	
 	@Column(name = "status")
 	private String status;
+	
+	@Column(name = "subStatus")
+	private String subStatus;
 
 }
