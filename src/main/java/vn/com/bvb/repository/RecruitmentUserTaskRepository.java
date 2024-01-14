@@ -9,13 +9,13 @@ import vn.com.bvb.entity.RecruitmentUserTask;
 
 public interface RecruitmentUserTaskRepository extends CrudRepository<RecruitmentUserTask, Long> {
 
-	List<RecruitmentUserTask> findByAssignee(String assignee);
+	List<RecruitmentUserTask> findByAssigneeOrderByModifiedDateDesc(String assignee);
 	
 	List<RecruitmentUserTask> findByEmployeeId(long employeeId);
 	
 	List<RecruitmentUserTask> findByEmployeeIdAndStatus(long employeeId, String status);
 	
-	List<RecruitmentUserTask> findByAssigneeAndStatus(String assignee, String status);
+	List<RecruitmentUserTask> findByAssigneeAndStatusOrderByModifiedDateDesc(String assignee, String status);
 	
 	Optional<RecruitmentUserTask> findByEmployeeIdAndTaskId(long employeeId, String taskId);
 	

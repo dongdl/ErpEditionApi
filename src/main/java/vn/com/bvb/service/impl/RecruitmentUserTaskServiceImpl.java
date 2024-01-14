@@ -33,7 +33,7 @@ public class RecruitmentUserTaskServiceImpl implements RecruitmentUserTaskServic
 	@Transactional
 	public List<RecruitmentUserTaskDTO> findByAssignee(String assignee) {
 		logger.info("Get all recruitment usertasks for assignee={} >>>>>>>", assignee);
-		List<RecruitmentUserTask> recruitmentUserTasks = recruitmentUserTaskRepository.findByAssignee(assignee);
+		List<RecruitmentUserTask> recruitmentUserTasks = recruitmentUserTaskRepository.findByAssigneeOrderByModifiedDateDesc(assignee);
 		return recruitmentUserTasks.stream()
 			.map(recruitmentUserTask -> {
 				
@@ -55,7 +55,7 @@ public class RecruitmentUserTaskServiceImpl implements RecruitmentUserTaskServic
 	@Transactional
 	public List<RecruitmentUserTaskDTO> findByAssigneeAndStatus(String assignee, String status) {
 		logger.info("Get all recruitment usertasks for assignee={} >>>>>>>", assignee);
-		List<RecruitmentUserTask> recruitmentUserTasks = recruitmentUserTaskRepository.findByAssigneeAndStatus(assignee, status);
+		List<RecruitmentUserTask> recruitmentUserTasks = recruitmentUserTaskRepository.findByAssigneeAndStatusOrderByModifiedDateDesc(assignee, status);
 		return recruitmentUserTasks.stream()
 			.map(recruitmentUserTask -> {
 				
