@@ -78,7 +78,7 @@
     <bpmn:sequenceFlow id="Flow_1lqgxrc" sourceRef="Gateway_0om3vk8" targetRef="two_eyes">
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">#{action == 'SUBMIT'}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
-    <bpmn:sequenceFlow id="Flow_0hyamwh" sourceRef="Gateway_0om3vk8" targetRef="Event_1ha6mzn">
+    <bpmn:sequenceFlow id="Flow_0hyamwh" name="Đóng hồ sơ" sourceRef="Gateway_0om3vk8" targetRef="Event_1ha6mzn">
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">#{action == 'CLOSE'}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
   </bpmn:process>
@@ -161,6 +161,9 @@
         <di:waypoint x="660" y="350" />
         <di:waypoint x="960" y="350" />
         <di:waypoint x="960" y="268" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="781" y="332" width="58" height="14" />
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
